@@ -1,0 +1,1698 @@
+{
+    "machine_info": {
+        "node": "xavier-ZenBook-UX534FT-UX534FT",
+        "processor": "x86_64",
+        "machine": "x86_64",
+        "python_compiler": "GCC 10.3.0",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.10.5",
+        "python_version": "3.10.5",
+        "python_build": [
+            "main",
+            "Jun 14 2022 07:04:59"
+        ],
+        "release": "5.15.0-39-generic",
+        "system": "Linux",
+        "cpu": {
+            "python_version": "3.10.5.final.0 (64 bit)",
+            "cpuinfo_version": [
+                8,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "8.0.0",
+            "arch": "X86_64",
+            "bits": 64,
+            "count": 8,
+            "arch_string_raw": "x86_64",
+            "vendor_id_raw": "GenuineIntel",
+            "brand_raw": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+            "hz_advertised_friendly": "1.8000 GHz",
+            "hz_actual_friendly": "2.0000 GHz",
+            "hz_advertised": [
+                1800000000,
+                0
+            ],
+            "hz_actual": [
+                2000000000,
+                0
+            ],
+            "stepping": 12,
+            "model": 142,
+            "family": 6,
+            "flags": [
+                "3dnowprefetch",
+                "abm",
+                "acpi",
+                "adx",
+                "aes",
+                "aperfmperf",
+                "apic",
+                "arat",
+                "arch_capabilities",
+                "arch_perfmon",
+                "art",
+                "avx",
+                "avx2",
+                "bmi1",
+                "bmi2",
+                "bts",
+                "clflush",
+                "clflushopt",
+                "cmov",
+                "constant_tsc",
+                "cpuid",
+                "cpuid_fault",
+                "cx16",
+                "cx8",
+                "de",
+                "ds_cpl",
+                "dtes64",
+                "dtherm",
+                "dts",
+                "epb",
+                "ept",
+                "ept_ad",
+                "erms",
+                "est",
+                "f16c",
+                "flexpriority",
+                "flush_l1d",
+                "fma",
+                "fpu",
+                "fsgsbase",
+                "fxsr",
+                "ht",
+                "hwp",
+                "hwp_act_window",
+                "hwp_epp",
+                "hwp_notify",
+                "ibpb",
+                "ibrs",
+                "ibrs_enhanced",
+                "ida",
+                "intel_pt",
+                "invpcid",
+                "invpcid_single",
+                "lahf_lm",
+                "lm",
+                "mca",
+                "mce",
+                "md_clear",
+                "mmx",
+                "monitor",
+                "movbe",
+                "mpx",
+                "msr",
+                "mtrr",
+                "nonstop_tsc",
+                "nopl",
+                "nx",
+                "osxsave",
+                "pae",
+                "pat",
+                "pbe",
+                "pcid",
+                "pclmulqdq",
+                "pdcm",
+                "pdpe1gb",
+                "pebs",
+                "pge",
+                "pln",
+                "pni",
+                "popcnt",
+                "pse",
+                "pse36",
+                "pts",
+                "rdrand",
+                "rdrnd",
+                "rdseed",
+                "rdtscp",
+                "rep_good",
+                "sdbg",
+                "sep",
+                "sgx",
+                "smap",
+                "smep",
+                "ss",
+                "ssbd",
+                "sse",
+                "sse2",
+                "sse4_1",
+                "sse4_2",
+                "ssse3",
+                "stibp",
+                "syscall",
+                "tm",
+                "tm2",
+                "tpr_shadow",
+                "tsc",
+                "tsc_adjust",
+                "tsc_deadline_timer",
+                "tscdeadline",
+                "vme",
+                "vmx",
+                "vnmi",
+                "vpid",
+                "x2apic",
+                "xgetbv1",
+                "xsave",
+                "xsavec",
+                "xsaveopt",
+                "xsaves",
+                "xtopology",
+                "xtpr"
+            ],
+            "l3_cache_size": 8388608,
+            "l2_cache_size": "1 MiB (4 instances)",
+            "l1_data_cache_size": "128 KiB (4 instances)",
+            "l1_instruction_cache_size": "128 KiB (4 instances)",
+            "l2_cache_line_size": 256,
+            "l2_cache_associativity": 6
+        }
+    },
+    "commit_info": {
+        "id": "unversioned",
+        "time": null,
+        "author_time": null,
+        "dirty": false,
+        "project": "scaling-benchmarks",
+        "branch": "(unknown)"
+    },
+    "benchmarks": [
+        {
+            "group": "2-dense-add",
+            "name": "test_linear_algebra_binary[numpy-2-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-2-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 2,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "numpy-2-dense-add",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.392899998289067e-05,
+                "max": 9.960499937733402e-05,
+                "mean": 3.5841983531726844e-05,
+                "stddev": 2.9942570376359784e-06,
+                "rounds": 19070,
+                "median": 3.509849966576439e-05,
+                "iqr": 9.089999366551638e-07,
+                "q1": 3.490899962343974e-05,
+                "q3": 3.5817999560094904e-05,
+                "iqr_outliers": 1001,
+                "stddev_outliers": 837,
+                "outliers": "837;1001",
+                "ld15iqr": 3.392899998289067e-05,
+                "hd15iqr": 3.718800053320592e-05,
+                "ops": 27900.241601160647,
+                "total": 0.6835066259500309,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-dense-matmul",
+            "name": "test_linear_algebra_binary[numpy-2-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-2-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 2,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "numpy-2-dense-matmul",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.3182000152010005e-05,
+                "max": 0.00010331700013921363,
+                "mean": 3.861778754328202e-05,
+                "stddev": 8.630166944216093e-06,
+                "rounds": 26636,
+                "median": 3.58260003849864e-05,
+                "iqr": 5.534998308576178e-07,
+                "q1": 3.577600000426173e-05,
+                "q3": 3.632949983511935e-05,
+                "iqr_outliers": 5100,
+                "stddev_outliers": 2370,
+                "outliers": "2370;5100",
+                "ld15iqr": 3.494599968689727e-05,
+                "hd15iqr": 3.716299943334889e-05,
+                "ops": 25894.802981119017,
+                "total": 1.0286233890028598,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-sparse-add",
+            "name": "test_linear_algebra_binary[numpy-2-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-2-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 2,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "numpy-2-sparse-add",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.312499939056579e-05,
+                "max": 0.00010993899923050776,
+                "mean": 3.9846609123371714e-05,
+                "stddev": 1.040881174356311e-05,
+                "rounds": 26983,
+                "median": 3.610199928516522e-05,
+                "iqr": 1.0370004019932821e-06,
+                "q1": 3.5801999729301315e-05,
+                "q3": 3.68390001312946e-05,
+                "iqr_outliers": 4079,
+                "stddev_outliers": 2799,
+                "outliers": "2799;4079",
+                "ld15iqr": 3.424700025789207e-05,
+                "hd15iqr": 3.8396000491047744e-05,
+                "ops": 25096.238350014526,
+                "total": 1.075181053975939,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-sparse-matmul",
+            "name": "test_linear_algebra_binary[numpy-2-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-2-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 2,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "numpy-2-sparse-matmul",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.394899977138266e-05,
+                "max": 0.00010835899956873618,
+                "mean": 3.9104002789390996e-05,
+                "stddev": 9.468488203268535e-06,
+                "rounds": 25445,
+                "median": 3.588999970816076e-05,
+                "iqr": 9.780005711945705e-07,
+                "q1": 3.580599968699971e-05,
+                "q3": 3.678400025819428e-05,
+                "iqr_outliers": 3094,
+                "stddev_outliers": 2206,
+                "outliers": "2206;3094",
+                "ld15iqr": 3.439699958107667e-05,
+                "hd15iqr": 3.8252999729593284e-05,
+                "ops": 25572.829599718174,
+                "total": 0.9950013509760538,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-dense-add",
+            "name": "test_linear_algebra_binary[numpy-4-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-4-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 4,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "numpy-4-dense-add",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.394699979253346e-05,
+                "max": 0.00017435500012652483,
+                "mean": 4.1067256354303127e-05,
+                "stddev": 1.1089357011693481e-05,
+                "rounds": 25964,
+                "median": 3.756299975066213e-05,
+                "iqr": 1.0490002750884742e-06,
+                "q1": 3.665199983515777e-05,
+                "q3": 3.770100011024624e-05,
+                "iqr_outliers": 4173,
+                "stddev_outliers": 2534,
+                "outliers": "2534;4173",
+                "ld15iqr": 3.508600002533058e-05,
+                "hd15iqr": 3.927999932784587e-05,
+                "ops": 24350.299697954317,
+                "total": 1.0662702439831264,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-dense-matmul",
+            "name": "test_linear_algebra_binary[numpy-4-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-4-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 4,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "numpy-4-dense-matmul",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.404600010981085e-05,
+                "max": 0.00010876600026676897,
+                "mean": 3.8601927255839574e-05,
+                "stddev": 6.812436278822741e-06,
+                "rounds": 25321,
+                "median": 3.6823999835178256e-05,
+                "iqr": 9.81999619398266e-07,
+                "q1": 3.67540005754563e-05,
+                "q3": 3.773600019485457e-05,
+                "iqr_outliers": 1842,
+                "stddev_outliers": 1189,
+                "outliers": "1189;1842",
+                "ld15iqr": 3.570499939087313e-05,
+                "hd15iqr": 3.921000006812392e-05,
+                "ops": 25905.442320855193,
+                "total": 0.9774394000451139,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-sparse-add",
+            "name": "test_linear_algebra_binary[numpy-4-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-4-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 4,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "numpy-4-sparse-add",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.4669999877223745e-05,
+                "max": 0.0001161540003522532,
+                "mean": 4.29681158900685e-05,
+                "stddev": 1.3355616478330256e-05,
+                "rounds": 18768,
+                "median": 3.752000066015171e-05,
+                "iqr": 1.8875002751883585e-06,
+                "q1": 3.661899972939864e-05,
+                "q3": 3.8506500004586997e-05,
+                "iqr_outliers": 3363,
+                "stddev_outliers": 2694,
+                "outliers": "2694;3363",
+                "ld15iqr": 3.4669999877223745e-05,
+                "hd15iqr": 4.1340999814565293e-05,
+                "ops": 23273.070724312034,
+                "total": 0.8064255990248057,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-sparse-matmul",
+            "name": "test_linear_algebra_binary[numpy-4-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-4-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 4,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "numpy-4-sparse-matmul",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.491700044833124e-05,
+                "max": 0.00012018400047963951,
+                "mean": 4.027784109455388e-05,
+                "stddev": 1.0127355992310308e-05,
+                "rounds": 24857,
+                "median": 3.766900044865906e-05,
+                "iqr": 9.979994501918554e-07,
+                "q1": 3.6763000025530346e-05,
+                "q3": 3.77609994757222e-05,
+                "iqr_outliers": 2730,
+                "stddev_outliers": 1982,
+                "outliers": "1982;2730",
+                "ld15iqr": 3.570399985619588e-05,
+                "hd15iqr": 3.925800046999939e-05,
+                "ops": 24827.547177924927,
+                "total": 1.001186296087326,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-dense-add",
+            "name": "test_linear_algebra_binary[numpy-8-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-8-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 8,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "numpy-8-dense-add",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.805599953921046e-05,
+                "max": 0.0001291959997615777,
+                "mean": 4.474962223608834e-05,
+                "stddev": 9.902394432828097e-06,
+                "rounds": 19708,
+                "median": 4.2178000512649305e-05,
+                "iqr": 1.0994995136570651e-06,
+                "q1": 4.122600057598902e-05,
+                "q3": 4.2325500089646084e-05,
+                "iqr_outliers": 2361,
+                "stddev_outliers": 1502,
+                "outliers": "1502;2361",
+                "ld15iqr": 3.957999979320448e-05,
+                "hd15iqr": 4.397999964567134e-05,
+                "ops": 22346.557356936744,
+                "total": 0.881925555028829,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-dense-matmul",
+            "name": "test_linear_algebra_binary[numpy-8-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-8-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 8,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "numpy-8-dense-matmul",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.863100027956534e-05,
+                "max": 0.000117097999464022,
+                "mean": 4.5550247328421465e-05,
+                "stddev": 1.0471381987712883e-05,
+                "rounds": 23018,
+                "median": 4.28020002800622e-05,
+                "iqr": 2.070000846288167e-07,
+                "q1": 4.268000066076638e-05,
+                "q3": 4.28870007453952e-05,
+                "iqr_outliers": 9693,
+                "stddev_outliers": 1620,
+                "outliers": "1620;9693",
+                "ld15iqr": 4.237199937051628e-05,
+                "hd15iqr": 4.3197999730182346e-05,
+                "ops": 21953.777611566147,
+                "total": 1.0484755930056053,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-sparse-add",
+            "name": "test_linear_algebra_binary[numpy-8-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-8-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 8,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "numpy-8-sparse-add",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.723800000443589e-05,
+                "max": 0.00013865300024917815,
+                "mean": 4.4660308677885745e-05,
+                "stddev": 1.0090229618246207e-05,
+                "rounds": 24258,
+                "median": 4.219599941279739e-05,
+                "iqr": 3.190007191733457e-07,
+                "q1": 4.201399951853091e-05,
+                "q3": 4.2333000237704255e-05,
+                "iqr_outliers": 10227,
+                "stddev_outliers": 1559,
+                "outliers": "1559;10227",
+                "ld15iqr": 4.1540999518474564e-05,
+                "hd15iqr": 4.2812000174308196e-05,
+                "ops": 22391.246939481316,
+                "total": 1.0833697679081524,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-sparse-matmul",
+            "name": "test_linear_algebra_binary[numpy-8-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[numpy-8-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'numpy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/numpy/__init__.py'>]",
+                "size": 8,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "numpy-8-sparse-matmul",
+            "extra_info": {
+                "dtype": "numpy"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.956699947593734e-05,
+                "max": 0.00011834599990834249,
+                "mean": 4.568999683567414e-05,
+                "stddev": 1.0447740099076139e-05,
+                "rounds": 22423,
+                "median": 4.282100053387694e-05,
+                "iqr": 5.447502644528868e-07,
+                "q1": 4.275799983588513e-05,
+                "q3": 4.330275010033802e-05,
+                "iqr_outliers": 4822,
+                "stddev_outliers": 1374,
+                "outliers": "1374;4822",
+                "ld15iqr": 4.194099983578781e-05,
+                "hd15iqr": 4.411999998410465e-05,
+                "ops": 21886.628786527148,
+                "total": 1.0245067990463212,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-dense-add",
+            "name": "test_linear_algebra_binary[scipy_csr-2-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-2-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 2,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "scipy_csr-2-dense-add",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.006032252000295557,
+                "max": 0.011449223999989044,
+                "mean": 0.0065665280266330225,
+                "stddev": 0.0011784155559967763,
+                "rounds": 150,
+                "median": 0.006192934000409878,
+                "iqr": 0.0001226109998242464,
+                "q1": 0.006154321000394702,
+                "q3": 0.006276932000218949,
+                "iqr_outliers": 19,
+                "stddev_outliers": 13,
+                "outliers": "13;19",
+                "ld15iqr": 0.006032252000295557,
+                "hd15iqr": 0.006485244000032253,
+                "ops": 152.28747915856357,
+                "total": 0.9849792039949534,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-dense-matmul",
+            "name": "test_linear_algebra_binary[scipy_csr-2-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-2-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 2,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "scipy_csr-2-dense-matmul",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.0064333440004702425,
+                "max": 0.011938019999433891,
+                "mean": 0.0070737141176497225,
+                "stddev": 0.0012215925520622957,
+                "rounds": 136,
+                "median": 0.006647743000030459,
+                "iqr": 0.0004964339996149647,
+                "q1": 0.006522717000279954,
+                "q3": 0.007019150999894919,
+                "iqr_outliers": 13,
+                "stddev_outliers": 12,
+                "outliers": "12;13",
+                "ld15iqr": 0.0064333440004702425,
+                "hd15iqr": 0.007908820999546151,
+                "ops": 141.36844992150392,
+                "total": 0.9620251200003622,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-sparse-add",
+            "name": "test_linear_algebra_binary[scipy_csr-2-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-2-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 2,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "scipy_csr-2-sparse-add",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.006072965999919688,
+                "max": 0.01152755499970226,
+                "mean": 0.006568873218565091,
+                "stddev": 0.0011766786299442237,
+                "rounds": 151,
+                "median": 0.006218988000000536,
+                "iqr": 0.00012741449950226524,
+                "q1": 0.006155835500294415,
+                "q3": 0.006283249999796681,
+                "iqr_outliers": 15,
+                "stddev_outliers": 12,
+                "outliers": "12;15",
+                "ld15iqr": 0.006072965999919688,
+                "hd15iqr": 0.006928368999979284,
+                "ops": 152.23311011297622,
+                "total": 0.9918998560033288,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-sparse-matmul",
+            "name": "test_linear_algebra_binary[scipy_csr-2-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-2-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 2,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "scipy_csr-2-sparse-matmul",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.00651349600047979,
+                "max": 0.012355386999843176,
+                "mean": 0.007067019785738792,
+                "stddev": 0.0012637768502350131,
+                "rounds": 140,
+                "median": 0.0066359664997435175,
+                "iqr": 0.00022980399990046863,
+                "q1": 0.006574461000127485,
+                "q3": 0.006804265000027954,
+                "iqr_outliers": 18,
+                "stddev_outliers": 13,
+                "outliers": "13;18",
+                "ld15iqr": 0.00651349600047979,
+                "hd15iqr": 0.007158616000197071,
+                "ops": 141.50236313445657,
+                "total": 0.9893827700034308,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-dense-add",
+            "name": "test_linear_algebra_binary[scipy_csr-4-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-4-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 4,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "scipy_csr-4-dense-add",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.0061181450000731274,
+                "max": 0.011552394999853277,
+                "mean": 0.006639597979713201,
+                "stddev": 0.0012026846996292017,
+                "rounds": 148,
+                "median": 0.006287298500410543,
+                "iqr": 0.00012540599982457934,
+                "q1": 0.006214496000211511,
+                "q3": 0.006339902000036091,
+                "iqr_outliers": 17,
+                "stddev_outliers": 14,
+                "outliers": "14;17",
+                "ld15iqr": 0.0061181450000731274,
+                "hd15iqr": 0.006562198999745306,
+                "ops": 150.6115284472683,
+                "total": 0.9826605009975538,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-dense-matmul",
+            "name": "test_linear_algebra_binary[scipy_csr-4-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-4-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 4,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "scipy_csr-4-dense-matmul",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.00648079799975676,
+                "max": 0.012178773999949044,
+                "mean": 0.0070587421418270855,
+                "stddev": 0.0013421383665316118,
+                "rounds": 141,
+                "median": 0.006643517000156862,
+                "iqr": 0.00013365599988901522,
+                "q1": 0.006576217749852731,
+                "q3": 0.006709873749741746,
+                "iqr_outliers": 16,
+                "stddev_outliers": 12,
+                "outliers": "12;16",
+                "ld15iqr": 0.00648079799975676,
+                "hd15iqr": 0.006963478000216128,
+                "ops": 141.66830008910907,
+                "total": 0.9952826419976191,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-sparse-add",
+            "name": "test_linear_algebra_binary[scipy_csr-4-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-4-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 4,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "scipy_csr-4-sparse-add",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.0060663240001304075,
+                "max": 0.011195308999958797,
+                "mean": 0.006641170449665573,
+                "stddev": 0.001213085032818379,
+                "rounds": 149,
+                "median": 0.006269008000344911,
+                "iqr": 0.00012092624956494546,
+                "q1": 0.006205537750020085,
+                "q3": 0.00632646399958503,
+                "iqr_outliers": 19,
+                "stddev_outliers": 13,
+                "outliers": "13;19",
+                "ld15iqr": 0.0060663240001304075,
+                "hd15iqr": 0.0065339510001649614,
+                "ops": 150.57586724797233,
+                "total": 0.9895343970001704,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-sparse-matmul",
+            "name": "test_linear_algebra_binary[scipy_csr-4-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-4-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 4,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "scipy_csr-4-sparse-matmul",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.006517247999909159,
+                "max": 0.012328479999268893,
+                "mean": 0.007116560272058503,
+                "stddev": 0.001350785215435312,
+                "rounds": 136,
+                "median": 0.0066856405001090025,
+                "iqr": 0.00012752050042763585,
+                "q1": 0.006633939999574068,
+                "q3": 0.006761460500001704,
+                "iqr_outliers": 16,
+                "stddev_outliers": 13,
+                "outliers": "13;16",
+                "ld15iqr": 0.006517247999909159,
+                "hd15iqr": 0.007001713000136078,
+                "ops": 140.51732322513507,
+                "total": 0.9678521969999565,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-dense-add",
+            "name": "test_linear_algebra_binary[scipy_csr-8-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-8-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 8,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "scipy_csr-8-dense-add",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.006261776999963331,
+                "max": 0.011440039000262914,
+                "mean": 0.006761436407935817,
+                "stddev": 0.0011618197435276376,
+                "rounds": 152,
+                "median": 0.006412400000044727,
+                "iqr": 0.00012355300032140804,
+                "q1": 0.006342133999623911,
+                "q3": 0.006465686999945319,
+                "iqr_outliers": 17,
+                "stddev_outliers": 13,
+                "outliers": "13;17",
+                "ld15iqr": 0.006261776999963331,
+                "hd15iqr": 0.006789894000576169,
+                "ops": 147.8975678638805,
+                "total": 1.0277383340062443,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-dense-matmul",
+            "name": "test_linear_algebra_binary[scipy_csr-8-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-8-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 8,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "scipy_csr-8-dense-matmul",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.0066454799998609815,
+                "max": 0.012577137999869592,
+                "mean": 0.007226059050711795,
+                "stddev": 0.0013052262208023543,
+                "rounds": 138,
+                "median": 0.006799716499699571,
+                "iqr": 0.00011505299971759086,
+                "q1": 0.006769822000023851,
+                "q3": 0.006884874999741442,
+                "iqr_outliers": 18,
+                "stddev_outliers": 12,
+                "outliers": "12;18",
+                "ld15iqr": 0.0066454799998609815,
+                "hd15iqr": 0.007118806000107725,
+                "ops": 138.38801938679094,
+                "total": 0.9971961489982277,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-sparse-add",
+            "name": "test_linear_algebra_binary[scipy_csr-8-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-8-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 8,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "scipy_csr-8-sparse-add",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.006125194000560441,
+                "max": 0.011513608999848657,
+                "mean": 0.006717069853128034,
+                "stddev": 0.0012465605144658665,
+                "rounds": 143,
+                "median": 0.006313578000117559,
+                "iqr": 9.588075022293197e-05,
+                "q1": 0.006281262249785868,
+                "q3": 0.0063771430000088,
+                "iqr_outliers": 19,
+                "stddev_outliers": 15,
+                "outliers": "15;19",
+                "ld15iqr": 0.006141522999314475,
+                "hd15iqr": 0.0065353689997209585,
+                "ops": 148.87443809063794,
+                "total": 0.9605409889973089,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-sparse-matmul",
+            "name": "test_linear_algebra_binary[scipy_csr-8-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[scipy_csr-8-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<module 'scipy' from '/home/xavier/anaconda3/envs/qutip4-bench/lib/python3.10/site-packages/scipy/__init__.py'>]",
+                "size": 8,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "scipy_csr-8-sparse-matmul",
+            "extra_info": {
+                "dtype": "scipy_csr"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.00650218299961125,
+                "max": 0.012150472000030277,
+                "mean": 0.00718417607857061,
+                "stddev": 0.0013861984613074993,
+                "rounds": 140,
+                "median": 0.006696059500427509,
+                "iqr": 0.00015308850061046542,
+                "q1": 0.006652567999481107,
+                "q3": 0.0068056565000915725,
+                "iqr_outliers": 19,
+                "stddev_outliers": 15,
+                "outliers": "15;19",
+                "ld15iqr": 0.00650218299961125,
+                "hd15iqr": 0.007055949999994482,
+                "ops": 139.1948066226912,
+                "total": 1.0057846509998853,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-dense-add",
+            "name": "test_linear_algebra_binary[Qobj-2-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-2-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 2,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "Qobj-2-dense-add",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.008342676000211213,
+                "max": 0.01529788500010909,
+                "mean": 0.009387535330081413,
+                "stddev": 0.0016818154613393787,
+                "rounds": 103,
+                "median": 0.008812981999653857,
+                "iqr": 0.0002661314997567388,
+                "q1": 0.008693403750385187,
+                "q3": 0.008959535250141926,
+                "iqr_outliers": 15,
+                "stddev_outliers": 10,
+                "outliers": "10;15",
+                "ld15iqr": 0.008342676000211213,
+                "hd15iqr": 0.009462862999498611,
+                "ops": 106.52423291506562,
+                "total": 0.9669161389983856,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-dense-matmul",
+            "name": "test_linear_algebra_binary[Qobj-2-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-2-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 2,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "Qobj-2-dense-matmul",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.0054225670000960235,
+                "max": 0.009601452000424615,
+                "mean": 0.006486264686301701,
+                "stddev": 0.0013207668032624996,
+                "rounds": 102,
+                "median": 0.005927631500071584,
+                "iqr": 0.0010060260010504862,
+                "q1": 0.005585533999692416,
+                "q3": 0.006591560000742902,
+                "iqr_outliers": 17,
+                "stddev_outliers": 17,
+                "outliers": "17;17",
+                "ld15iqr": 0.0054225670000960235,
+                "hd15iqr": 0.008692651000274054,
+                "ops": 154.17193845201746,
+                "total": 0.6615989980027734,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-sparse-add",
+            "name": "test_linear_algebra_binary[Qobj-2-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-2-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 2,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "Qobj-2-sparse-add",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.00806071500028338,
+                "max": 0.014229067999622202,
+                "mean": 0.008896042327123554,
+                "stddev": 0.0015847150758057647,
+                "rounds": 107,
+                "median": 0.008339299999533978,
+                "iqr": 0.000393700749555137,
+                "q1": 0.00819684350017269,
+                "q3": 0.008590544249727827,
+                "iqr_outliers": 12,
+                "stddev_outliers": 12,
+                "outliers": "12;12",
+                "ld15iqr": 0.00806071500028338,
+                "hd15iqr": 0.011236987000302179,
+                "ops": 112.40953709843015,
+                "total": 0.9518765290022202,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "2-sparse-matmul",
+            "name": "test_linear_algebra_binary[Qobj-2-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-2-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 2,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "Qobj-2-sparse-matmul",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.0053973250005583395,
+                "max": 0.00983568900028331,
+                "mean": 0.006183552957039072,
+                "stddev": 0.0010630084848102699,
+                "rounds": 163,
+                "median": 0.005837161000272317,
+                "iqr": 0.0005158302496965916,
+                "q1": 0.005582912000363649,
+                "q3": 0.006098742250060241,
+                "iqr_outliers": 20,
+                "stddev_outliers": 18,
+                "outliers": "18;20",
+                "ld15iqr": 0.0053973250005583395,
+                "hd15iqr": 0.006911079000019527,
+                "ops": 161.71932333200866,
+                "total": 1.0079191319973688,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-dense-add",
+            "name": "test_linear_algebra_binary[Qobj-4-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-4-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 4,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "Qobj-4-dense-add",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.008032634999835864,
+                "max": 0.014186294999490201,
+                "mean": 0.009016590304764534,
+                "stddev": 0.0015528228458680684,
+                "rounds": 105,
+                "median": 0.008475843999804056,
+                "iqr": 0.0004925899997942906,
+                "q1": 0.00827440925013434,
+                "q3": 0.008766999249928631,
+                "iqr_outliers": 12,
+                "stddev_outliers": 12,
+                "outliers": "12;12",
+                "ld15iqr": 0.008032634999835864,
+                "hd15iqr": 0.010856668999622343,
+                "ops": 110.90666939492431,
+                "total": 0.946741982000276,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-dense-matmul",
+            "name": "test_linear_algebra_binary[Qobj-4-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-4-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 4,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "Qobj-4-dense-matmul",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.005455419999634614,
+                "max": 0.009805065999898943,
+                "mean": 0.006160631916135307,
+                "stddev": 0.001072031855704588,
+                "rounds": 155,
+                "median": 0.0058083540006919065,
+                "iqr": 0.000305038750411768,
+                "q1": 0.005661362249384183,
+                "q3": 0.005966400999795951,
+                "iqr_outliers": 20,
+                "stddev_outliers": 17,
+                "outliers": "17;20",
+                "ld15iqr": 0.005455419999634614,
+                "hd15iqr": 0.006685756000479159,
+                "ops": 162.32101083346672,
+                "total": 0.9548979470009726,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-sparse-add",
+            "name": "test_linear_algebra_binary[Qobj-4-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-4-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 4,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "Qobj-4-sparse-add",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.008102204999886453,
+                "max": 0.014094772999669658,
+                "mean": 0.009016280009265958,
+                "stddev": 0.0015643184064540634,
+                "rounds": 108,
+                "median": 0.008466900000257738,
+                "iqr": 0.00041298900032415986,
+                "q1": 0.008297197000047163,
+                "q3": 0.008710186000371323,
+                "iqr_outliers": 13,
+                "stddev_outliers": 12,
+                "outliers": "12;13",
+                "ld15iqr": 0.008102204999886453,
+                "hd15iqr": 0.01043383499927586,
+                "ops": 110.910486250683,
+                "total": 0.9737582410007235,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "4-sparse-matmul",
+            "name": "test_linear_algebra_binary[Qobj-4-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-4-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 4,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "Qobj-4-sparse-matmul",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.005531455999516766,
+                "max": 0.009859261000201514,
+                "mean": 0.006166170473400901,
+                "stddev": 0.0010790796004203319,
+                "rounds": 150,
+                "median": 0.005798071500066726,
+                "iqr": 0.00031842900079936953,
+                "q1": 0.005661157999384159,
+                "q3": 0.005979587000183528,
+                "iqr_outliers": 20,
+                "stddev_outliers": 18,
+                "outliers": "18;20",
+                "ld15iqr": 0.005531455999516766,
+                "hd15iqr": 0.006499066000287712,
+                "ops": 162.17521139152973,
+                "total": 0.9249255710101352,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-dense-add",
+            "name": "test_linear_algebra_binary[Qobj-8-dense-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-8-dense-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 8,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "Qobj-8-dense-add",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.008277381999505451,
+                "max": 0.014735216999724798,
+                "mean": 0.009171519117595986,
+                "stddev": 0.0016410434552151499,
+                "rounds": 102,
+                "median": 0.008575867499530432,
+                "iqr": 0.0004272150008546305,
+                "q1": 0.00843430199984141,
+                "q3": 0.00886151700069604,
+                "iqr_outliers": 13,
+                "stddev_outliers": 12,
+                "outliers": "12;13",
+                "ld15iqr": 0.008277381999505451,
+                "hd15iqr": 0.009547642999677919,
+                "ops": 109.033191467862,
+                "total": 0.9354949499947907,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-dense-matmul",
+            "name": "test_linear_algebra_binary[Qobj-8-dense-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-8-dense-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 8,
+                "density": "dense",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "Qobj-8-dense-matmul",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.005741606999436044,
+                "max": 0.010043882999525522,
+                "mean": 0.006490997877577053,
+                "stddev": 0.0011020666288293294,
+                "rounds": 147,
+                "median": 0.006116232999374915,
+                "iqr": 0.0004631602500921872,
+                "q1": 0.005906751000566146,
+                "q3": 0.006369911250658333,
+                "iqr_outliers": 17,
+                "stddev_outliers": 17,
+                "outliers": "17;17",
+                "ld15iqr": 0.005741606999436044,
+                "hd15iqr": 0.007889077000072575,
+                "ops": 154.05951732852486,
+                "total": 0.9541766880038267,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-sparse-add",
+            "name": "test_linear_algebra_binary[Qobj-8-sparse-add]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-8-sparse-add]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 8,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_add at 0x7fe5671aaef0>]"
+            },
+            "param": "Qobj-8-sparse-add",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.008140195999658317,
+                "max": 0.014348232999509491,
+                "mean": 0.009065587200029767,
+                "stddev": 0.0016893580251805377,
+                "rounds": 100,
+                "median": 0.008460404999823368,
+                "iqr": 0.0004377189998194808,
+                "q1": 0.008299415500005125,
+                "q3": 0.008737134499824606,
+                "iqr_outliers": 13,
+                "stddev_outliers": 11,
+                "outliers": "11;13",
+                "ld15iqr": 0.008140195999658317,
+                "hd15iqr": 0.009814279999773134,
+                "ops": 110.30725069819155,
+                "total": 0.9065587200029768,
+                "iterations": 1
+            }
+        },
+        {
+            "group": "8-sparse-matmul",
+            "name": "test_linear_algebra_binary[Qobj-8-sparse-matmul]",
+            "fullname": "benchmarks/tests/test_linear_algebra.py::test_linear_algebra_binary[Qobj-8-sparse-matmul]",
+            "params": {
+                "dtype": "UNSERIALIZABLE[<class 'qutip.qobj.Qobj'>]",
+                "size": 8,
+                "density": "sparse",
+                "get_operation": "UNSERIALIZABLE[<function get_matmul at 0x7fe5671aae60>]"
+            },
+            "param": "Qobj-8-sparse-matmul",
+            "extra_info": {
+                "dtype": "Qobj"
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.005603947000054177,
+                "max": 0.010157922999496805,
+                "mean": 0.006264542569582448,
+                "stddev": 0.0011016062096950224,
+                "rounds": 151,
+                "median": 0.005885843000214663,
+                "iqr": 0.00026832350044969644,
+                "q1": 0.005775429000095755,
+                "q3": 0.006043752500545452,
+                "iqr_outliers": 20,
+                "stddev_outliers": 16,
+                "outliers": "16;20",
+                "ld15iqr": 0.005603947000054177,
+                "hd15iqr": 0.006502657999590156,
+                "ops": 159.62857445578078,
+                "total": 0.9459459280069495,
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2022-06-16T11:19:12.289768",
+    "version": "3.4.1"
+}
