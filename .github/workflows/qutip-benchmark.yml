@@ -1,17 +1,78 @@
-name: qutip-benchmark
-on: [push]
+# The name is short because we mostly care how it appears in the pull request
+# "checks" dialogue box - it looks like
+#     Tests / ubuntu-latest, python-3.9, defaults
+# or similar.
+name: Benchmarks
+
+on:
+    [push, pull_request]
+
+defaults:
+  run:
+    # The slightly odd shell call is to force bash to read .bashrc, which is
+    # necessary for having conda behave sensibly.  We use bash as the shell even
+    # on Windows, since we don't run anything much complicated, and it makes
+    # things much simpler.
+    shell: bash -l {0}
+
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
+  cases:
+    name: ${{ matrix.os }}, python${{ matrix.python-version }}, ${{ matrix.case-name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        # Test other versions of Python in special cases to avoid exploding the
+        # matrix size; make sure to test all supported versions in some form.
+        python-version: ["3.9"]
+        case-name: [defaults]
+        numpy-requirement: ["=1.22.4"]
+        scipy-requirement: ["=1.8.1"]
+        cython-requirement: ["=0.29.30"]
+        pytest-requirement: ["=7.1.2"]
+        pytest-benchmark-requirement: ["=3.4.1"]
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - uses: actions/checkout@v2
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: actions-bench
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+          channels: conda-forge
+
+      - name: Install QuTiP and dependencies
+        # In the run, first we handle any special cases.  We do this in bash
+        # rather than in the GitHub Actions file directly, because bash gives us
+        # a proper programming language to use.
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+           conda install nomkl "numpy${{ matrix.numpy-requirement }}" "scipy${{ matrix.scipy-requirement }}" "cython${{ matrix.cython-requirement }}" "pytest${{ matrix.pytest-requirement }}" "pytest-benchmark${{ matrix.pytest-benchmark-requirement }}" matplotlib pandas
+           python -m pip install git+https://github.com/qutip/qutip@dev.major
+
+      - name: Package information
+        run: |
+          conda list
+          python -c "import qutip; qutip.about()"
+      - name: Environment information
+        run: |
+          uname -a
+          if [[ "ubuntu-latest" == "${{ matrix.os }}" ]]; then
+              hostnamectl
+              lscpu
+              free -h
+          fi
+      - name: Run benchmarks
+        # If our tests are running for longer than an hour, _something_ is wrong
+        # somewhere.  The GitHub default is 6 hours, which is a bit long to wait
+        # to see if something hung.
+        timeout-minutes: 60
+        run: |
+          python benchmarks/benchmarks.py -v
+      
+      - name: Upload output file
+        uses: actions/upload-artifact@v3
+        with:
+          name: benchmark-data
+          path: ./.benchmarks

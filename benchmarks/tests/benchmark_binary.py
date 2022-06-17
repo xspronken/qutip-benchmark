@@ -16,31 +16,15 @@ import warnings
 import numpy as np
 import scipy as sc
 import qutip as qt
-import qutip_tensorflow as qtf
-import qutip_cupy as qtc
-from qutip_tensorflow.core.data.tftensor import TfTensor128, TfTensor64
-
-with warnings.catch_warnings():
-    warnings.filterwarnings("ignore", category=DeprecationWarning)
-    import tensorflow as tf
 
 
-def sincronize_output(x, dtype):
-    """If computaiton is done with a GPU, sinchronize it."""
-    if dtype == tf:
-        _ = x.numpy()
 
-    if dtype==TfTensor128 or dtype==TfTensor64 :
-        _ = x.data._tf.numpy()
 
 
 def get_matmul(dtype):
     def matmul(A, B, dtype, rep):
         for _ in range(rep):
             x = A@B
-
-        sincronize_output(x, dtype)
-
         return x
 
     return matmul
@@ -50,8 +34,6 @@ def get_add(dtype):
     def add(A, B, dtype, rep):
         for _ in range(rep):
             x = A+B
-
-        sincronize_output(x, dtype)
 
         return x
     return add

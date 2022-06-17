@@ -10,13 +10,6 @@ import warnings
 from . import benchmark_unary
 from . import benchmark_binary
 
-with warnings.catch_warnings():
-    warnings.filterwarnings("ignore", category=DeprecationWarning)
-    import tensorflow as tf
-
-import qutip_tensorflow as qtf
-import qutip_cupy as qtc
-
 # Get functions from unary ops that begin with `get`
 unary_ops = [ getattr(benchmark_unary,_) for _ in dir(benchmark_unary) if _[:3]=="get"]
 unary_ids = [ _[4:] for _ in dir(benchmark_unary) if _[:3]=="get"]
@@ -25,7 +18,7 @@ binary_ops = [ getattr(benchmark_binary,_) for _ in dir(benchmark_binary) if _[:
 binary_ids = [ _[4:] for _ in dir(benchmark_binary) if _[:3]=="get"]
 
 
-@pytest.fixture(params = np.logspace(1, 10, 10, base=2, dtype=int).tolist())
+@pytest.fixture(params = np.logspace(1, 3, 3, base=2, dtype=int).tolist())
 def size(request): return request.param
 
 @pytest.fixture(params = ["dense", "sparse"])
@@ -56,8 +49,6 @@ def change_dtype(A, dtype):
     specified by dtype"""
     if dtype == np:
         return A
-    elif dtype == tf:
-        return tf.convert_to_tensor(A)
     elif dtype == sc:
         return sc.sparse.csr_matrix(A)
     elif issubclass(dtype, qt.data.base.Data):
@@ -65,10 +56,8 @@ def change_dtype(A, dtype):
         return A.to(dtype)
 
 #Supported dtypes
-dtype_list = [ qtc.dense.CuPyDense, np, tf, sc, qt.data.Dense, qt.data.CSR, qtf.data.TfTensor128, 
-             qtf.data.TfTensor64]
-dtype_ids = ['cupyd','numpy', 'tensorflow', 'scipy_csr', 'qutip_dense', 'qutip_csr',
-             'qutip_tftensor_128', 'qutip_tftensor_64']
+dtype_list = [np, sc, qt.data.Dense, qt.data.CSR]
+dtype_ids = ['numpy', 'scipy_csr', 'qutip_dense', 'qutip_csr']
 @pytest.fixture(params = dtype_list, ids=dtype_ids)
 def dtype(request): return request.param
 
