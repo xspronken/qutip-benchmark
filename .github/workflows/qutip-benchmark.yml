@@ -48,6 +48,7 @@ jobs:
         # rather than in the GitHub Actions file directly, because bash gives us
         # a proper programming language to use.
         run: |
+<<<<<<< HEAD
            conda install nomkl "numpy${{ matrix.numpy-requirement }}" "scipy${{ matrix.scipy-requirement }}" "cython${{ matrix.cython-requirement }}" "pytest${{ matrix.pytest-requirement }}" "pytest-benchmark${{ matrix.pytest-benchmark-requirement }}" matplotlib pandas
            python -m pip install git+https://github.com/qutip/qutip@dev.major
 
@@ -76,3 +77,8 @@ jobs:
         with:
           name: benchmark-data
           path: ./.benchmarks
+=======
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: ls
+>>>>>>> 3e4b270ac9b29ca9d3f9f5520ad7c7ee62556fd6
