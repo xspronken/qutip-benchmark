@@ -69,15 +69,17 @@ jobs:
         # to see if something hung.
         timeout-minutes: 60
         run: |
-          python benchmarks/benchmarks.py -v
+          python benchmarks/benchmarks.py -v     
       
+      - name: create comparison histograms
+        run: |
+          pytest-benchmark compare --histogram=./.benchmarks/histograms/
+        
       - name: push changes to remote
         run: |
           git config --global user.name "git actions"
           git config --global user.email "xspronken@gmail.com"
 
           git add .benchmarks 
-          git commit -m "add benchmark data"
+          git commit -m "add benchmark data and comparison histograms"
           git push
-      
-      
