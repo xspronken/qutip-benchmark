@@ -49,7 +49,7 @@ jobs:
         # a proper programming language to use.
         run: |
            conda install nomkl "numpy${{ matrix.numpy-requirement }}" "scipy${{ matrix.scipy-requirement }}" "cython${{ matrix.cython-requirement }}" "pytest${{ matrix.pytest-requirement }}" "pytest-benchmark${{ matrix.pytest-benchmark-requirement }}" matplotlib pandas
-           python -m pip install pyga pygaljs
+           python -m pip install pygal pygaljs
            python -m pip install git+https://github.com/qutip/qutip@dev.major
 
       - name: Package information
