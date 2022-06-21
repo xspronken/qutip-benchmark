@@ -18,7 +18,7 @@ binary_ops = [ getattr(benchmark_binary,_) for _ in dir(benchmark_binary) if _[:
 binary_ids = [ _[4:] for _ in dir(benchmark_binary) if _[:3]=="get"]
 
 
-@pytest.fixture(params = np.logspace(1, 10, 10, base=2, dtype=int).tolist())
+@pytest.fixture(params = np.logspace(1, 9, 9, base=2, dtype=int).tolist())
 def size(request): return request.param
 
 @pytest.fixture(params = ["dense", "sparse"])
