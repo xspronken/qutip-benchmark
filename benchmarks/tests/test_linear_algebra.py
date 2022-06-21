@@ -7,18 +7,18 @@ import scipy as sc
 import scipy.sparse
 from numpy.testing import assert_almost_equal
 import warnings
-from . import benchmark_unary
+# from . import benchmark_unary
 from . import benchmark_binary
 
 # Get functions from unary ops that begin with `get`
-unary_ops = [ getattr(benchmark_unary,_) for _ in dir(benchmark_unary) if _[:3]=="get"]
-unary_ids = [ _[4:] for _ in dir(benchmark_unary) if _[:3]=="get"]
+# unary_ops = [ getattr(benchmark_unary,_) for _ in dir(benchmark_unary) if _[:3]=="get"]
+# unary_ids = [ _[4:] for _ in dir(benchmark_unary) if _[:3]=="get"]
 
 binary_ops = [ getattr(benchmark_binary,_) for _ in dir(benchmark_binary) if _[:3]=="get"]
 binary_ids = [ _[4:] for _ in dir(benchmark_binary) if _[:3]=="get"]
 
 
-@pytest.fixture(params = np.logspace(1, 8, 8, base=2, dtype=int).tolist())
+@pytest.fixture(params = np.logspace(1, 10, 10, base=2, dtype=int).tolist())
 def size(request): return request.param
 
 @pytest.fixture(params = ["dense", "sparse"])
@@ -62,26 +62,26 @@ dtype_ids = ['numpy', 'scipy_csr', 'qutip_dense', 'qutip_csr']
 def dtype(request): return request.param
 
 
-@pytest.mark.parametrize("get_operation", unary_ops, ids=unary_ids)
-def test_linear_algebra_unary(benchmark, matrix, dtype, get_operation, request):
-    # Group benchmark by operation, density and size.
-    group = request.node.callspec.id
-    group = group.split('-')
-    benchmark.group = '-'.join(group)
-    benchmark.extra_info['dtype'] = group[0]
+# @pytest.mark.parametrize("get_operation", unary_ops, ids=unary_ids)
+# def test_linear_algebra_unary(benchmark, matrix, dtype, get_operation, request):
+#     # Group benchmark by operation, density and size.
+#     group = request.node.callspec.id
+#     group = group.split('-')
+#     benchmark.group = '-'.join(group)
+#     benchmark.extra_info['dtype'] = group[0]
 
-    # Create unitary
-    A = matrix
-    A = change_dtype(A, dtype)
+#     # Create unitary
+#     A = matrix
+#     A = change_dtype(A, dtype)
 
-    # Benchmark operations and skip those that are not implemented.
-    try:
-        operation = get_operation(dtype)
-        result = benchmark(operation, A, dtype, 100)
-    except (NotImplementedError):
-        result = None
+#     # Benchmark operations and skip those that are not implemented.
+#     try:
+#         operation = get_operation(dtype)
+#         result = benchmark(operation, A, dtype, 100)
+#     except (NotImplementedError):
+#         result = None
 
-    return result
+#     return result
 
 @pytest.mark.parametrize("get_operation", binary_ops, ids=binary_ids)
 def test_linear_algebra_binary(benchmark, matrix, dtype, get_operation, request):
