@@ -72,9 +72,9 @@ jobs:
         run: |
           python benchmarks/benchmarks.py -v     
       
-      - name: create comparison histograms
+      - name: create comparison plots
         run: |
-          pytest-benchmark compare --histogram=./.benchmarks/histograms/
+          python benchmarks/view_benchmarks.py
         
       - name: push changes to remote
         run: |
@@ -82,5 +82,5 @@ jobs:
           git config --global user.email "xspronken@gmail.com"
 
           git add .benchmarks 
-          git commit -m "add benchmark data and comparison histograms"
+          git commit -m "add benchmark data and comparison plots"
           git push

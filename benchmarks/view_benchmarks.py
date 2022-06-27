@@ -40,6 +40,7 @@ def json_to_dataframe(filepath):
         # The name of the operation is obtained from the group name
         data.params_get_operation = data.group.str.split('-')
         data.params_get_operation = [d[-1] for d in data.params_get_operation]
+        data.params_get_operation = [d[-1] for d in data.params_get_operation]
         cpu = cpu.replace("@","at")
         cpu = cpu.replace(".","-")
         cpu = cpu.replace("(R)", "")
@@ -84,7 +85,7 @@ def create_dataframe(paths):
  
     for path in paths:
         data = json_to_dataframe(path)
-        df = pd.concat([df,data])
+        df = pd.concat([df,data], ignore_index=True)
     
     return df
 
@@ -94,8 +95,12 @@ def main(args=[]):
     folder = ".benchmarks/figures"
     paths = get_paths()
     data = create_dataframe(paths)
+
     Path(folder).mkdir(parents=True, exist_ok=True)
-    plot_benchmark(data,)
+    plot_benchmark(data)
+
+    data.to_json(path_or_buf=".benchmarks/benchmarks-dataframe",orient='index')
+    
 
   
 if __name__ == '__main__':
