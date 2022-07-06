@@ -71,16 +71,14 @@ jobs:
         timeout-minutes: 60
         run: |
           python benchmarks/benchmarks.py -v     
-      
-      - name: create comparison plots
-        run: |
-          python benchmarks/view_benchmarks.py
         
-      - name: push changes to remote
-        run: |
-          git config --global user.name "git actions"
-          git config --global user.email "xspronken@gmail.com"
+      - uses: shallwefootball/s3-upload-action@master
+        name: Upload S3
+        id: S3
+        with:
+          aws_key_id: ${{ secrets.QUTIP_BENCHMARK_S3_KEYID }}
+          aws_secret_access_key: ${{ secrets.QUTIP_BENCHMARK_S3_SECRET}}
+          aws_bucket: 's3://qutip-benchmark-data'
+          source_dir: '.benchmarks'
 
-          git add .benchmarks 
-          git commit -m "add benchmark data and comparison plots"
-          git push
+      

@@ -6189,5 +6189,13 @@
         }
     ],
     "datetime": "2022-07-01T15:17:51.074326",
-    "version": "3.4.1"
+    "version": "3.4.1",
+    "package_versions": {
+        "scipy": "1.8.1",
+        "numpy": "1.22.4",
+        "cython": "0.29.30",
+        "qutip": "5.0.0.dev0+0a19bf9",
+        "pytest": "7.1.2",
+        "pytest-benchmark": "3.4.1"
+    }
 }
