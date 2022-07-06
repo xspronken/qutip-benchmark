@@ -72,13 +72,17 @@ jobs:
         run: |
           python benchmarks/benchmarks.py -v     
         
-      - uses: shallwefootball/s3-upload-action@master
-        name: Upload S3
-        id: S3
-        with:
-          aws_key_id: ${{ secrets.QUTIP_BENCHMARK_S3_KEYID }}
-          aws_secret_access_key: ${{ secrets.QUTIP_BENCHMARK_S3_SECRET}}
-          aws_bucket: 'qutip-benchmark-data'
-          source_dir: '.benchmarks'
+        
+      - name: upload to s3
+        run: |
+          aws s3 sync ./.benchmarks s3://qutip-benchmark-data
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.QUTIP_BENCHMARK_S3_KEYID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.QUTIP_BENCHMARK_S3_SECRET }}
+     
+
+      
+
+
 
       
