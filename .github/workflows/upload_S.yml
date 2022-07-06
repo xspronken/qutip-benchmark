@@ -78,7 +78,7 @@ jobs:
         with:
           aws_key_id: ${{ secrets.QUTIP_BENCHMARK_S3_KEYID }}
           aws_secret_access_key: ${{ secrets.QUTIP_BENCHMARK_S3_SECRET}}
-          aws_bucket: 's3://qutip-benchmark-data'
+          aws_bucket: 'qutip-benchmark-data'
           source_dir: '.benchmarks'
 
       
