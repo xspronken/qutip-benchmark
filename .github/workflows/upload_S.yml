@@ -96,8 +96,10 @@ jobs:
 
       - name: update plots
         run: |
-          git pull
+          git config --global user.name "git actions"
+          git config --global user.email "xspronken@gmail.com"
+
           git add ./.benchmarks/figures
           git commit -m "replace plot images"
-          git push
+          git push origin pytest-ci
       
