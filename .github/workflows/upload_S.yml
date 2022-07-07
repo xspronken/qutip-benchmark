@@ -94,7 +94,9 @@ jobs:
           python benchmarks/view_benchmarks.py
           ls ./.benchmarks/figures
       
-      
+      - name: show plot pngs
+        run: |
+          ls ./.benchmarks/figures      
 
 
 
