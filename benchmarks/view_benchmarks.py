@@ -72,6 +72,8 @@ def compute_stats(df):
 def plot_benchmark_dtype(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
+    folder = Path(".benchmarks/figures/dtype_sep")
+    folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
         if size > 200  and operation == 'matmul':
@@ -110,6 +112,8 @@ def plot_benchmark_dtype(df):
 def plot_benchmark_cpu_dtype(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
+    folder = Path(".benchmarks/figures/cpu_dtype_sep")
+    folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size','cpu'])
     for (operation, density, size, cpu), group in grouped:
         if size > 200  and operation == 'matmul':
@@ -147,34 +151,36 @@ def plot_benchmark_cpu_dtype(df):
 def plot_benchmark_cpu(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
+    folder = Path(".benchmarks/figures/cpu_sep")
+    folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size','cpu'])
     for (operation, density, size, cpu), group in grouped:
         if size > 200 and operation == 'matmul':
             d = {}
-            fig, ax = plt.subplots(1,1,sharex=True)
-            # fig.set_size_inches(15, 15)
+            fig, ax = plt.subplots(2,1,sharex=True)
+            fig.set_size_inches(15, 15)
             fig.suptitle(f"{operation} {density} {size} {cpu}")
             for dtype, g in group.groupby('extra_info_dtype'):
-                ax.errorbar(g.time, g.stats_mean, g.stats_stddev,
+                ax[0].errorbar(g.time, g.stats_mean, g.stats_stddev,
                             fmt='.-', label=dtype)
                 d[dtype]=g.stats_mean
-            ax.legend()        
-            ax.set_xlabel("date")
-            ax.tick_params(labelrotation=90)
-            ax.set_ylabel("time (s)")
-            ax.set_yscale('log')
-            # list1 = [i/j for i,j in zip(d['numpy'],d["qutip_dense"])]
+            ax[0].legend()        
+            ax[0].set_xlabel("date")
+            ax[0].tick_params(labelrotation=90)
+            ax[0].set_ylabel("time (s)")
+            ax[0].set_yscale('log')
+            list1 = [i/j for i,j in zip(d['numpy'],d["qutip_dense"])]
 
-            # list2 = [i/j for i,j in zip(d['scipy_csr'],d["qutip_csr"])]
+            list2 = [i/j for i,j in zip(d['scipy_csr'],d["qutip_csr"])]
 
-            # ax[1].plot(list1, label= "numpy/qutip_dense")
+            ax[1].plot(list1, label= "numpy/qutip_dense")
  
-            # ax[1].plot(list2, label= "scipy_csr/qutip_sparse")
+            ax[1].plot(list2, label= "scipy_csr/qutip_sparse")
   
-            # ax[1].legend()
-            # ax[1].set_xlabel("date")
-            # ax[1].tick_params(labelrotation=90)
-            # ax[1].set_ylabel("time (s)")
+            ax[1].legend()
+            ax[1].set_xlabel("date")
+            ax[1].tick_params(labelrotation=90)
+            ax[1].set_ylabel("time (s)")
 
             plt.tight_layout()
             plt.savefig(f"./.benchmarks/figures/cpu_sep/{cpu}_{operation}_{density}_{size}.png")
@@ -183,6 +189,8 @@ def plot_benchmark_cpu(df):
 def plot_benchmark(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
+    folder = Path(".benchmarks/figures/no_sep")
+    folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
         if size > 200 and operation == 'matmul':
