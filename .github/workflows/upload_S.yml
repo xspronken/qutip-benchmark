@@ -65,6 +65,15 @@ jobs:
               free -h
           fi 
                 
+      - name: Run benchmarks
+        # If our tests are running for longer than an hour, _something_ is wrong
+        # somewhere.  The GitHub default is 6 hours, which is a bit long to wait
+        # to see if something hung.
+        timeout-minutes: 60
+        run: |
+          python benchmarks/benchmarks.py -v 
+
+          
       - name: upload to s3
         run: |
           aws s3 sync ./.benchmarks s3://qutip-benchmark-data
