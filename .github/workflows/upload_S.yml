@@ -92,12 +92,12 @@ jobs:
       - name: create plot pngs
         run: |
           python benchmarks/view_benchmarks.py
-          ls ./.benchmarks/figures
-      
-      - name: show plot pngs
+
+
+      - name: update plots
         run: |
-          ls ./.benchmarks/figures      
-
-
-
+          git pull
+          git add ./.benchmarks/figures
+          git commit -m "replace plot images"
+          git push
       
