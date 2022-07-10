@@ -72,7 +72,7 @@ def compute_stats(df):
 def plot_benchmark_dtype(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
-    folder = Path(".benchmarks/figures/dtype_sep")
+    folder = Path("images/dtype_sep")
     folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
@@ -106,13 +106,13 @@ def plot_benchmark_dtype(df):
                 ax[n,0].tick_params(labelrotation=90)
                 ax[n,0].set_ylabel("time (s)")
                 n = n+1
-            plt.savefig(f"./.benchmarks/figures/dtype_sep/{operation}_{density}_{size}.png",bbox_inches='tight')
+            plt.savefig(f"./images/dtype_sep/{operation}_{density}_{size}.png",bbox_inches='tight')
             plt.close()
 
 def plot_benchmark_cpu_dtype(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
-    folder = Path(".benchmarks/figures/cpu_dtype_sep")
+    folder = Path("images/cpu_dtype_sep")
     folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size','cpu'])
     for (operation, density, size, cpu), group in grouped:
@@ -145,13 +145,13 @@ def plot_benchmark_cpu_dtype(df):
                     ax[n,0].tick_params(labelrotation=90)
                     ax[n,0].set_ylabel("time (s)")
                     n = n+1
-            plt.savefig(f"./.benchmarks/figures/cpu_dtype_sep/{cpu}_{operation}_{density}_{size}.png",bbox_inches='tight')
+            plt.savefig(f"./images/cpu_dtype_sep/{cpu}_{operation}_{density}_{size}.png",bbox_inches='tight')
             plt.close()
 
 def plot_benchmark_cpu(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
-    folder = Path(".benchmarks/figures/cpu_sep")
+    folder = Path("images/cpu_sep")
     folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size','cpu'])
     for (operation, density, size, cpu), group in grouped:
@@ -183,13 +183,13 @@ def plot_benchmark_cpu(df):
             ax[1].set_ylabel("time (s)")
 
             plt.tight_layout()
-            plt.savefig(f"./.benchmarks/figures/cpu_sep/{cpu}_{operation}_{density}_{size}.png")
+            plt.savefig(f"./images/cpu_sep/{cpu}_{operation}_{density}_{size}.png")
             plt.close()
 
 def plot_benchmark(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
-    folder = Path(".benchmarks/figures/no_sep")
+    folder = Path("images/no_sep")
     folder.mkdir(parents=True, exist_ok=True)
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
@@ -204,7 +204,7 @@ def plot_benchmark(df):
             plt.xticks(rotation=90)
             plt.ylabel("time (s)")
             plt.tight_layout()
-            plt.savefig(f"./.benchmarks/figures/no_sep/{operation}_{density}_{size}.png")
+            plt.savefig(f"./images/no_sep/{operation}_{density}_{size}.png")
             plt.close()
 
 def count_cpu(df):
@@ -243,7 +243,7 @@ def create_dataframe(paths):
 
 
 def main(args=[]):
-    folder = Path(".benchmarks/figures")
+    folder = Path("images")
     paths = get_paths()
     data = create_dataframe(paths)
     folder.mkdir(parents=True, exist_ok=True)
