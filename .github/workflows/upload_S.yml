@@ -80,7 +80,8 @@ jobs:
       - name: import bench website
         run: |
           git clone -b gh-pages https://github.com/qutip/qutip-benchmark
-          cp -r images qutip-benchmark/
+          rm -rf qutip-benchmark/.git
+          cp -rf images qutip-benchmark/
           
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
