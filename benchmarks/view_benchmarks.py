@@ -227,7 +227,7 @@ def get_paths():
     zipped = zip(dates, benchmark_paths)
     tmp = sorted(zipped, key = lambda x: x[0])
     res = list(zip(*tmp))
-    
+
     return res[1]
 
 def create_dataframe(paths):
