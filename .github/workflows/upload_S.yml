@@ -71,6 +71,24 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.QUTIP_BENCHMARK_S3_KEYID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.QUTIP_BENCHMARK_S3_SECRET }}
           AWS_EC2_METADATA_DISABLED: true
+    
+      - name: Run benchmarks
+        # If our tests are running for longer than an hour, _something_ is wrong
+        # somewhere.  The GitHub default is 6 hours, which is a bit long to wait
+        # to see if something hung.
+        timeout-minutes: 60
+        run: |
+          python benchmarks/benchmarks.py -v 
+
+
+      - name: upload to s3
+        run: |
+          aws s3 sync ./.benchmarks s3://qutip-benchmark-data
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.QUTIP_BENCHMARK_S3_KEYID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.QUTIP_BENCHMARK_S3_SECRET }}
+          AWS_EC2_METADATA_DISABLED: true
+
                     
      
       - name: create plot pngs
@@ -83,12 +101,6 @@ jobs:
           rm -rf qutip-benchmark/.git
           cp -rf images qutip-benchmark/
           
-      - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact
-          path: qutip-benchmark
-          retention-days: 5
       
       - name: Publish plots
         run: | 
