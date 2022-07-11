@@ -5,10 +5,8 @@
 name: Benchmarks
 
 on:
-  push:
-  pull_request:
-  schedule:
-    - cron: "0,30 * * * *"
+  [push, pull_request]
+
 
 
 defaults:
@@ -104,8 +102,12 @@ jobs:
           git clone -b gh-pages https://github.com/qutip/qutip-benchmark
           rm -rf qutip-benchmark/.git
           cp -rf images qutip-benchmark/
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: website
+          path: qutip-benchmark
           
-      
       - name: publish website
         run: | 
           python -m pip install ghp-import
