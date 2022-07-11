@@ -99,7 +99,7 @@ jobs:
       
       - name: import website adn replace images
         run: |
-          git clone -b gh-pages https://github.com/qutip/qutip-benchmark
+          git clone depth 1 -b gh-pages https://github.com/qutip/qutip-benchmark
           rm -rf qutip-benchmark/.git
           cp -rf images qutip-benchmark/
       - name: 'Upload Artifact'
