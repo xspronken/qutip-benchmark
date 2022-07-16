@@ -5,8 +5,7 @@
 name: Benchmarks
 
 on:
-  schedule:
-    - cron: "49 * * * *"
+  [push, pull_request]
 
 
 
