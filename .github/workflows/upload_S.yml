@@ -5,7 +5,8 @@
 name: Benchmarks
 
 on:
-  [push, pull_request]
+  schedule:
+    - cron: "0 * * * *"
 
 
 
@@ -97,16 +98,12 @@ jobs:
         run: |
           python benchmarks/view_benchmarks.py
       
-      - name: import website adn replace images
+      - name: import website and replace images
         run: |
           git clone --depth 1 -b gh-pages https://github.com/qutip/qutip-benchmark
           rm -rf qutip-benchmark/.git
           cp -rf images qutip-benchmark/
-      - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
-        with:
-          name: website
-          path: qutip-benchmark
+
           
       - name: publish website
         run: | 

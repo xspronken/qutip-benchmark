@@ -4,10 +4,12 @@ import os
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy import stats
 import pytest
 import argparse
 import glob
 from pathlib import Path
+from datetime import datetime
 
 
 def unravel(data, key):
@@ -18,6 +20,14 @@ def unravel(data, key):
         for k, v in values.items():
             d[key+'_'+k] = v
     return data
+
+
+def remove_outliers(df,col,n_std):  
+    mean = df[col].mean()
+    sd = df[col].std()
+    
+    df = df[(df[col] <= mean+(n_std*sd))]
+    return df
 
 
 def json_to_dataframe(filepath):
@@ -49,7 +59,8 @@ def json_to_dataframe(filepath):
         time = time.replace("T", " ")
         data['cpu']= cpu
         data['time'] = time
-        
+        data['time'] = pd.to_datetime(data['time'], format='%Y-%m-%d %H:%M:%S')
+
         return data
 
 def compute_stats(df):
@@ -69,44 +80,54 @@ def compute_stats(df):
     datadf = pd.DataFrame(data, columns= column_names)
     return datadf
 
-def plot_benchmark_dtype(df):
+def plot_benchmark_dtype(df,fill=False,outlier=0):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
-    folder = Path("images/dtype_sep")
-    folder.mkdir(parents=True, exist_ok=True)
+    
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
-        if size > 200  and operation == 'matmul':
-            N = len(group.groupby('extra_info_dtype'))
-            fig, ax = plt.subplots(N,2,sharex=True,gridspec_kw={'width_ratios': [3, 1]})
-            fig.set_size_inches(15, 6*N)
+        if size > 100:
+            N = int(len(group.groupby('extra_info_dtype'))/2)
+            fig, ax = plt.subplots(N,1)
+            fig.set_size_inches(15, 12*N)
             fig.suptitle(f"{operation} {density} {size}")
             n=0
             for dtype, g in group.groupby('extra_info_dtype'):
-  
-                x = g.stats_mean.describe(percentiles=[0.05,0.25,0.5,0.75,0.95])
-                median = [x['50%'] for i in g.stats_median]
-                medianplus10 = [i*1.1 for i in median]
-                medianminus10 = [i*0.9 for i in median]
+                if ((dtype == "qutip_dense" or dtype == "numpy") and density == 'dense') or ((dtype == "qutip_csr" or dtype == "scipy_csr") and density == 'sparse'): 
+                    if (not fill):
+                        for cpu, gr in g.groupby( 'cpu'):
+                            if(outlier >0):
+                                gr = remove_outliers(gr,'stats_mean',outlier)
+                            ax[n].errorbar(gr.time, gr.stats_mean, gr.stats_stddev,
+                                            fmt='.-', label=cpu) 
+                    else:
+                        for cpu, gr in g.groupby( 'cpu'):
+                            if(outlier >0):
+                                gr = remove_outliers(gr,'stats_mean',outlier)
+                            ax[n].plot(gr.time, gr.stats_mean, label=cpu)
+                            ax[n].fill_between(gr.time, gr.stats_mean-gr.stats_stddev, gr.stats_mean+gr.stats_stddev,alpha=0.3) 
+                    
+                    ax[n].legend() 
+                    ax[n].set_title(dtype)       
+                    ax[n].set_xlabel("date")
+                    ax[n].tick_params(labelrotation=90)
+                    ax[n].set_ylabel("time (s)")
+                    ax[n].set_ylim(ymin=0)
+                    n = n+1
 
                 
-                ax[n,0].errorbar(g.time, g.stats_mean, g.stats_stddev,
-                                fmt='.-', label=dtype)
-                
-                ax[n,0].plot(g.time,median, label='median')
-                ax[n,0].plot(g.time,medianplus10, label='median + 10%')
-                ax[n,0].plot(g.time,medianminus10, label='median - 10%')
-                
-                
-                
-                ax[n,1].set_axis_off()
-                ax[n,1].text(0,0.5,f"{x}")
-                ax[n,0].legend()        
-                ax[n,0].set_xlabel("date")
-                ax[n,0].tick_params(labelrotation=90)
-                ax[n,0].set_ylabel("time (s)")
-                n = n+1
-            plt.savefig(f"./images/dtype_sep/{operation}_{density}_{size}.png",bbox_inches='tight')
+            plt.gcf().autofmt_xdate()
+
+            folder = Path("images/newplots")
+            folder.mkdir(parents=True, exist_ok=True)
+            if(fill and outlier > 0):
+                plt.savefig(f"./images/newplots/{operation}_{density}_{size}_fill_outlier.png",bbox_inches='tight')
+            elif(fill and outlier == 0):
+                plt.savefig(f"./images/newplots/{operation}_{density}_{size}_fill.png",bbox_inches='tight')
+            elif (not fill and outlier > 0):
+                plt.savefig(f"./images/newplots/{operation}_{density}_{size}_outlier.png",bbox_inches='tight')
+            else:
+                plt.savefig(f"./images/newplots/{operation}_{density}_{size}.png",bbox_inches='tight')
             plt.close()
 
 def plot_benchmark_cpu_dtype(df):
@@ -118,7 +139,7 @@ def plot_benchmark_cpu_dtype(df):
     for (operation, density, size, cpu), group in grouped:
         if size > 200  and operation == 'matmul':
             N = len(group.groupby('extra_info_dtype'))
-            fig, ax = plt.subplots(N,2,sharex=True,gridspec_kw={'width_ratios': [3, 1]})
+            fig, ax = plt.subplots(N,1)
             fig.set_size_inches(15, 6*N)
             fig.suptitle(f"{operation} {density} {size} {cpu}")
             n=0
@@ -129,22 +150,18 @@ def plot_benchmark_cpu_dtype(df):
                     medianminus10 = [i*0.9 for i in median]
 
                     
-                    ax[n,0].errorbar(g.time, g.stats_mean, g.stats_stddev,
+                    ax[n].errorbar(g.time, g.stats_mean, g.stats_stddev,
                                     fmt='.-', label=dtype)
                     
-                    ax[n,0].plot(g.time,median, label='median')
-                    ax[n,0].plot(g.time,medianplus10, label='median + 10%')
-                    ax[n,0].plot(g.time,medianminus10, label='median - 10%')
-                    
-                    
-                    
-                    ax[n,1].set_axis_off()
-                    ax[n,1].text(0,0.5,f"{x}")
-                    ax[n,0].legend()        
-                    ax[n,0].set_xlabel("date")
-                    ax[n,0].tick_params(labelrotation=90)
-                    ax[n,0].set_ylabel("time (s)")
+                    ax[n].plot(g.time,median, label='median')
+                    ax[n].plot(g.time,medianplus10, label='median + 10%')
+                    ax[n].plot(g.time,medianminus10, label='median - 10%')
+                    ax[n].legend()        
+                    ax[n].set_xlabel("date")
+                    ax[n].tick_params(labelrotation=90)
+                    ax[n].set_ylabel("time (s)")
                     n = n+1
+            plt.gcf().autofmt_xdate()
             plt.savefig(f"./images/cpu_dtype_sep/{cpu}_{operation}_{density}_{size}.png",bbox_inches='tight')
             plt.close()
 
@@ -157,32 +174,22 @@ def plot_benchmark_cpu(df):
     for (operation, density, size, cpu), group in grouped:
         if size > 200 and operation == 'matmul':
             d = {}
-            fig, ax = plt.subplots(2,1,sharex=True)
+            fig, ax = plt.subplots(1,1)
             fig.set_size_inches(15, 15)
             fig.suptitle(f"{operation} {density} {size} {cpu}")
             for dtype, g in group.groupby('extra_info_dtype'):
-                ax[0].errorbar(g.time, g.stats_mean, g.stats_stddev,
+                ax.errorbar(g.time, g.stats_mean, g.stats_stddev,
                             fmt='.-', label=dtype)
                 d[dtype]=g.stats_mean
-            ax[0].legend()        
-            ax[0].set_xlabel("date")
-            ax[0].tick_params(labelrotation=90)
-            ax[0].set_ylabel("time (s)")
-            ax[0].set_yscale('log')
-            list1 = [i/j for i,j in zip(d['numpy'],d["qutip_dense"])]
+            ax.legend()        
+            ax.set_xlabel("date")
+            ax.tick_params(labelrotation=90)
+            ax.set_ylabel("time (s)")
+            ax.set_yscale('log')
 
-            list2 = [i/j for i,j in zip(d['scipy_csr'],d["qutip_csr"])]
-
-            ax[1].plot(list1, label= "numpy/qutip_dense")
- 
-            ax[1].plot(list2, label= "scipy_csr/qutip_sparse")
-  
-            ax[1].legend()
-            ax[1].set_xlabel("date")
-            ax[1].tick_params(labelrotation=90)
-            ax[1].set_ylabel("time (s)")
 
             plt.tight_layout()
+            plt.gcf().autofmt_xdate()
             plt.savefig(f"./images/cpu_sep/{cpu}_{operation}_{density}_{size}.png")
             plt.close()
 
@@ -204,6 +211,7 @@ def plot_benchmark(df):
             plt.xticks(rotation=90)
             plt.ylabel("time (s)")
             plt.tight_layout()
+            plt.gcf().autofmt_xdate()
             plt.savefig(f"./images/no_sep/{operation}_{density}_{size}.png")
             plt.close()
 
@@ -247,15 +255,22 @@ def main(args=[]):
     paths = get_paths()
     data = create_dataframe(paths)
     folder.mkdir(parents=True, exist_ok=True)
-    count_cpu(data)
-    plot_benchmark(data)
-    print('no sep done')
+
+    # plot_benchmark(data)
+    # print('no sep done')
+   # plot_benchmark_dtype(data)
+    plot_benchmark_dtype(data,True,3)
+    print('fill outlier')
+    plot_benchmark_dtype(data,True)
+    print('fill')
+    plot_benchmark_dtype(data,outlier=3)
+    print('outlier')
     plot_benchmark_dtype(data)
-    print('dtype sep done')
-    plot_benchmark_cpu(data)
-    print('cpu sep done')
-    plot_benchmark_cpu_dtype(data)
-    print('dtype cpu sep done')
+    print('none')
+    # plot_benchmark_cpu(data)
+    # print('cpu sep done')
+    # plot_benchmark_cpu_dtype(data)
+    # print('dtype cpu sep done')
  
 
   
