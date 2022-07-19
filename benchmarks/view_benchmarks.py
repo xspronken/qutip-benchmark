@@ -1,6 +1,7 @@
 import json
 import pathlib
 import os
+from re import M
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -80,54 +81,55 @@ def compute_stats(df):
     datadf = pd.DataFrame(data, columns= column_names)
     return datadf
 
-def plot_benchmark_dtype(df,fill=False,outlier=0):
+def plot_benchmark_dtype(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
     
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
-        if size > 100:
-            N = int(len(group.groupby('extra_info_dtype'))/2)
-            fig, ax = plt.subplots(N,1)
-            fig.set_size_inches(15, 12*N)
-            fig.suptitle(f"{operation} {density} {size}")
-            n=0
+        if size == 128 or size == 512:
+
+            fig, ax = plt.subplots(1,1)
+            fig.suptitle(f'Matrix density: {density}         Matrix Size: {size}x{size}', fontsize=20)
+            fig.set_size_inches(9, 9)
             for dtype, g in group.groupby('extra_info_dtype'):
-                if ((dtype == "qutip_dense" or dtype == "numpy") and density == 'dense') or ((dtype == "qutip_csr" or dtype == "scipy_csr") and density == 'sparse'): 
-                    if (not fill):
-                        for cpu, gr in g.groupby( 'cpu'):
-                            if(outlier >0):
-                                gr = remove_outliers(gr,'stats_mean',outlier)
-                            ax[n].errorbar(gr.time, gr.stats_mean, gr.stats_stddev,
-                                            fmt='.-', label=cpu) 
-                    else:
-                        for cpu, gr in g.groupby( 'cpu'):
-                            if(outlier >0):
-                                gr = remove_outliers(gr,'stats_mean',outlier)
-                            ax[n].plot(gr.time, gr.stats_mean, label=cpu)
-                            ax[n].fill_between(gr.time, gr.stats_mean-gr.stats_stddev, gr.stats_mean+gr.stats_stddev,alpha=0.3) 
-                    
-                    ax[n].legend() 
-                    ax[n].set_title(dtype)       
-                    ax[n].set_xlabel("date")
-                    ax[n].tick_params(labelrotation=90)
-                    ax[n].set_ylabel("time (s)")
-                    ax[n].set_ylim(ymin=0)
-                    n = n+1
+                colors = ["blue", "orange", "green", "red"]
+                markers = ['o','x','v']
+                count = 0
+                cpus = []
+                for cpu, gr in g.groupby('cpu'):
+                    if "Platinum" in cpu:
+                        cpus.append(cpu)
+                        if dtype == 'numpy':
+                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[0])
+                        if dtype == 'qutip_dense':
+                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[1])
+                        if dtype == 'qutip_csr':
+                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[2])
+                        if dtype == 'scipy_csr':
+                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[3])
+                        count = count+1                  
+                f = lambda m,c: plt.plot([],[],marker=m, color=c, ls="none")[0]
+
+            handles = [f("s", colors[i]) for i in range(4)]
+            handles += [f(markers[i], "k") for i in range(3)]
+            labels = ['numpy','qutip_dense','qutip_csr','scipy_csr'] + cpus
+            ax.legend(handles, labels) 
+            ax.set_xlabel("date")
+            ax.tick_params(labelrotation=90)
+            ax.set_ylabel("time (s)")
+            ax.set_yscale('log')
+            fig.tight_layout()
+            fig.subplots_adjust(top=0.95)
+            
+
 
                 
             plt.gcf().autofmt_xdate()
 
-            folder = Path("images/newplots")
+            folder = Path("images/plots")
             folder.mkdir(parents=True, exist_ok=True)
-            if(fill and outlier > 0):
-                plt.savefig(f"./images/newplots/{operation}_{density}_{size}_fill_outlier.png",bbox_inches='tight')
-            elif(fill and outlier == 0):
-                plt.savefig(f"./images/newplots/{operation}_{density}_{size}_fill.png",bbox_inches='tight')
-            elif (not fill and outlier > 0):
-                plt.savefig(f"./images/newplots/{operation}_{density}_{size}_outlier.png",bbox_inches='tight')
-            else:
-                plt.savefig(f"./images/newplots/{operation}_{density}_{size}.png",bbox_inches='tight')
+            plt.savefig(f"./images/plots/{operation}_{density}_{size}.png",bbox_inches='tight')
             plt.close()
 
 def plot_benchmark_cpu_dtype(df):
@@ -259,14 +261,8 @@ def main(args=[]):
     # plot_benchmark(data)
     # print('no sep done')
    # plot_benchmark_dtype(data)
-    plot_benchmark_dtype(data,True,3)
-    print('fill outlier')
-    plot_benchmark_dtype(data,True)
-    print('fill')
-    plot_benchmark_dtype(data,outlier=3)
-    print('outlier')
     plot_benchmark_dtype(data)
-    print('none')
+    print('done')
     # plot_benchmark_cpu(data)
     # print('cpu sep done')
     # plot_benchmark_cpu_dtype(data)
