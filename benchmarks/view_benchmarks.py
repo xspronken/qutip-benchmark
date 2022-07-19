@@ -1,4 +1,5 @@
 import json
+from lib2to3.pgen2.pgen import DFAState
 import pathlib
 import os
 from re import M
@@ -29,7 +30,11 @@ def remove_outliers(df,col,n_std):
     
     df = df[(df[col] <= mean+(n_std*sd))]
     return df
-
+def delete_date_duplicates(df):
+    df["date"] = df["time"].dt.date
+    df.drop_duplicates(subset=["date"], keep='last')
+    print(df.date)
+    return df
 
 def json_to_dataframe(filepath):
     """Loads a JSON file where the benchmark is stored and returns a dataframe
@@ -94,22 +99,23 @@ def plot_benchmark_dtype(df):
             fig.set_size_inches(9, 9)
             for dtype, g in group.groupby('extra_info_dtype'):
                 colors = ["blue", "orange", "green", "red"]
-                markers = ['o','x','v']
+                markers = ['o--','x-','v:']
                 count = 0
                 cpus = []
-                for cpu, gr in g.groupby('cpu'):
+                for cpu, gra in g.groupby('cpu'):
+                    gr = delete_date_duplicates(gra)
                     if "Platinum" in cpu:
                         cpus.append(cpu)
                         if dtype == 'numpy':
-                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[0])
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
                         if dtype == 'qutip_dense':
-                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[1])
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
                         if dtype == 'qutip_csr':
-                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[2])
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
                         if dtype == 'scipy_csr':
-                            ax.plot(gr.time, gr.stats_mean, markers[count]+'-', color=colors[3])
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[3])
                         count = count+1                  
-                f = lambda m,c: plt.plot([],[],marker=m, color=c, ls="none")[0]
+                f = lambda m,c: plt.plot([],[],m, color=c)[0]
 
             handles = [f("s", colors[i]) for i in range(4)]
             handles += [f(markers[i], "k") for i in range(3)]
