@@ -54,7 +54,7 @@ jobs:
            python -m pip install pygal pygaljs
            git clone --branch dev.major https://github.com/qutip/qutip
            cd qutip
-           python setup.py
+           python setup.py install
            cd ..
            ls
       - name: test qobjevo string
