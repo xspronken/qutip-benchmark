@@ -54,6 +54,7 @@ jobs:
            python -m pip install pygal pygaljs
            git clone --branch dev.major https://github.com/qutip/qutip
            cd qutip
+           echo "recursive-include qutip *.h" >> MANIFEST.in
            python setup.py install
            cd ..
            ls
