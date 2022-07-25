@@ -13,10 +13,10 @@ benchmarks.
     """
 import qutip as qt
 
-def get_matmul():
-    def matmul(op, ket, rep):
+def get_evo_matmul():
+    def evo_matmul(op, ket, rep):
         for _ in range(rep):
             x = op.matmul(2,ket)
         return x
 
-    return matmul
+    return evo_matmul

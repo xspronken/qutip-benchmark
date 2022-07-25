@@ -75,10 +75,6 @@ jobs:
           AWS_EC2_METADATA_DISABLED: true
     
       - name: Run benchmarks
-        # If our tests are running for longer than an hour, _something_ is wrong
-        # somewhere.  The GitHub default is 6 hours, which is a bit long to wait
-        # to see if something hung.
-        timeout-minutes: 60
         run: |
           python benchmarks/benchmarks.py -v 
 
