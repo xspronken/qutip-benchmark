@@ -9,6 +9,7 @@ from numpy.testing import assert_almost_equal
 import warnings
 # from . import benchmark_unary
 from . import benchmark_binary
+from . import benchmark_time_evo
 
 # Get functions from unary ops that begin with `get`
 # unary_ops = [ getattr(benchmark_unary,_) for _ in dir(benchmark_unary) if _[:3]=="get"]
@@ -83,21 +84,21 @@ def dtype(request): return request.param
 
 #     return result
 
-@pytest.mark.parametrize("get_operation", binary_ops, ids=binary_ids)
-def test_linear_algebra_binary(benchmark, matrix, dtype, get_operation, request):
-    # Group benchmark by operation, density and size.
-    group = request.node.callspec.id
-    group = group.split('-')
-    benchmark.group = '-'.join(group)
-    benchmark.extra_info['dtype'] = group[0]
+# @pytest.mark.parametrize("get_operation", binary_ops, ids=binary_ids)
+# def test_linear_algebra_binary(benchmark, matrix, dtype, get_operation, request):
+#     # Group benchmark by operation, density and size.
+#     group = request.node.callspec.id
+#     group = group.split('-')
+#     benchmark.group = '-'.join(group)
+#     benchmark.extra_info['dtype'] = group[0]
 
-    matrix = change_dtype(matrix, dtype)
+#     matrix = change_dtype(matrix, dtype)
 
-    # Benchmark operations and skip those that are not implemented.
-    try:
-        operation = get_operation(dtype)
-        result = benchmark(operation, matrix, matrix, dtype, 100)
-    except (NotImplementedError):
-        result = None
+#     # Benchmark operations and skip those that are not implemented.
+#     try:
+#         operation = get_operation(dtype)
+#         result = benchmark(operation, matrix, matrix, dtype, 100)
+#     except (NotImplementedError):
+#         result = None
 
-    return result
+#     return result

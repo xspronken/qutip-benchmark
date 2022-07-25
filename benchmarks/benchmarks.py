@@ -60,6 +60,7 @@ def main(args=[]):
                                      The script also accepts the same arguments
                                      as pytest/pytest-benchmark. The script must be run
                                      from the root of the repository.""")
+
     run_benchmarks(args)
     path = get_latest_benchmark_path()
     add_packages_to_json(path)
