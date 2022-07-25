@@ -11,14 +11,7 @@ The function does not need to return anything else. The getters have as input pa
 only dtype. If the getter returns a NotImplementedError it will be omitted in the
 benchmarks.
     """
-
-
-
 import qutip as qt
-
-
-
-
 
 def get_matmul():
     def matmul(op, ket, rep):

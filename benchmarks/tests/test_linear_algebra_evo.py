@@ -55,9 +55,13 @@ def time_dep(A, dtype):
         return qt.QobjEvo([A,cos_t])
     elif dtype == 'string':
         return qt.QobjEvo([A,'cos(t)'])
+    elif dtype == 'array':
+        tlist = np.linspace(0, 10, 101)
+        values = np.cos(tlist)
+        return qt.QobjEvo([A, values], tlist=tlist)
 
 #Supported dtypes
-dtype = ['function']
+dtype = ['function','array']
 @pytest.fixture(params = dtype)
 def dtype(request): return request.param
 

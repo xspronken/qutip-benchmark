@@ -77,21 +77,21 @@ def cavity_setup(dimension):
     return (H, psi0, tspan, J, [n])
 
 
-# @pytest.mark.parametrize("get_solver",solver_ops,ids=solver_ids)
-# def test_mesolve(benchmark, model, jc_setup,cavity_setup, get_solver, request):
-#     group = request.node.callspec.id
-#     group = group.split('-')
-#     benchmark.group = '-'.join(group)
+@pytest.mark.parametrize("get_solver",solver_ops,ids=solver_ids)
+def test_mesolve(benchmark, model, jc_setup,cavity_setup, get_solver, request):
+    group = request.node.callspec.id
+    group = group.split('-')
+    benchmark.group = '-'.join(group)
 
-#     if(model == 'cavity'):
-#         setup = cavity_setup
-#     elif(model == 'jc'):
-#         setup = jc_setup
+    if(model == 'cavity'):
+        setup = cavity_setup
+    elif(model == 'jc'):
+        setup = jc_setup
 
     
-#     solver = get_solver(setup)
-#     result = benchmark(solver,rep)
-#     return result
+    solver = get_solver(setup)
+    result = benchmark(solver,rep)
+    return result
 
 
 @pytest.fixture(params = np.arange(2,11,1,dtype=int).tolist())
@@ -128,14 +128,14 @@ def qubit_setup(n_qubits):
     tlist = np.linspace(0, 10, 11)
     return (H, psi0, tlist, c_ops, [qt.tensor(I,qt.sigmaz())])
 
-# @pytest.mark.parametrize("get_solver",solver_ops,ids=solver_ids)
-# def test_mesolve_qubit(benchmark,q_model, qubit_setup, get_solver, request):
-#     group = request.node.callspec.id
-#     group = group.split('-')
-#     benchmark.group = '-'.join(group)
+@pytest.mark.parametrize("get_solver",solver_ops,ids=solver_ids)
+def test_mesolve_qubit(benchmark,q_model, qubit_setup, get_solver, request):
+    group = request.node.callspec.id
+    group = group.split('-')
+    benchmark.group = '-'.join(group)
     
-#     if(q_model == 'qubit'):
-#         setup = qubit_setup
-#     solver = get_solver(setup)
-#     result = benchmark(solver,rep)
-#     return result
+    if(q_model == 'qubit'):
+        setup = qubit_setup
+    solver = get_solver(setup)
+    result = benchmark(solver,rep)
+    return result
