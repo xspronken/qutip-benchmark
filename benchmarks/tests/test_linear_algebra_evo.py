@@ -48,7 +48,9 @@ def vector(size):
 def time_dep(A, dtype):
     """Creates a Qobj evo with either string or function instanciation"""
     if dtype == 'function':
-        return qt.QobjEvo([A,np.cos])
+        def cos_t(t):
+            return np.cos(t)
+        return qt.QobjEvo([A,cos_t])
     elif dtype == 'string':
         return qt.QobjEvo([A,'cos(t)'])
     elif dtype == 'array':

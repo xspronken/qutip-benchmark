@@ -21,8 +21,8 @@ import qutip as qt
 
 
 
-def get_matmul(dtype):
-    def matmul(A, B, dtype, rep):
+def get_matmul():
+    def matmul(A, B, rep):
         for _ in range(rep):
             x = A@B
         return x
@@ -30,11 +30,10 @@ def get_matmul(dtype):
     return matmul
 
 
-def get_add(dtype):
-    def add(A, B, dtype, rep):
+def get_add():
+    def add(A, B, rep):
         for _ in range(rep):
             x = A+B
 
         return x
     return add
-

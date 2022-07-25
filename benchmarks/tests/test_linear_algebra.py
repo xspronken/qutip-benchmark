@@ -96,8 +96,8 @@ def test_linear_algebra_binary(benchmark, matrix, dtype, get_operation, request)
 
     # Benchmark operations and skip those that are not implemented.
     try:
-        operation = get_operation(dtype)
-        result = benchmark(operation, matrix, matrix, dtype, 100)
+        operation = get_operation()
+        result = benchmark(operation, matrix, matrix, 100)
     except (NotImplementedError):
         result = None
 
