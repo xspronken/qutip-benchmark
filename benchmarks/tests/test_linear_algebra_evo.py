@@ -42,17 +42,13 @@ def matrix(size, density):
         return qt.Qobj(H + H.T.conj())
 
 @pytest.fixture(scope='function')
-def vector(size,density):
-    if density == "dense":
-        return qt.rand_ket(size,density=1)
-    return qt.rand_ket(size,density=0)
+def vector(size):
+    return qt.rand_ket(size,density=1)
 
 def time_dep(A, dtype):
     """Creates a Qobj evo with either string or function instanciation"""
     if dtype == 'function':
-        def cos_t(t):
-            return np.cos(t)
-        return qt.QobjEvo([A,cos_t])
+        return qt.QobjEvo([A,np.cos])
     elif dtype == 'string':
         return qt.QobjEvo([A,'cos(t)'])
     elif dtype == 'array':
@@ -61,7 +57,7 @@ def time_dep(A, dtype):
         return qt.QobjEvo([A, values], tlist=tlist)
 
 #Supported dtypes
-dtype = ['function','array']
+dtype = ['function','array','string']
 @pytest.fixture(params = dtype)
 def dtype(request): return request.param
 

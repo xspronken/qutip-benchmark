@@ -16,16 +16,7 @@ import qutip as qt
 def get_matmul():
     def matmul(op, ket, rep):
         for _ in range(rep):
-            x = op@ket
+            x = op.matmul(2,ket)
         return x
 
     return matmul
-
-
-def get_expect_matmul():
-    def ex_matmul(op, ket, rep):
-        for _ in range(rep):
-            x = op(2)@ket
-
-        return x
-    return ex_matmul
