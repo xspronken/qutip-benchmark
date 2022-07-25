@@ -45,19 +45,24 @@ jobs:
           python-version: ${{ matrix.python-version }}
           channels: conda-forge
 
-      - name: Install QuTiP and dependencies
-        # In the run, first we handle any special cases.  We do this in bash
-        # rather than in the GitHub Actions file directly, because bash gives us
-        # a proper programming language to use.
+      - name: Install dependencies
         run: |
            conda install nomkl "numpy${{ matrix.numpy-requirement }}" "scipy${{ matrix.scipy-requirement }}" "cython${{ matrix.cython-requirement }}" "pytest${{ matrix.pytest-requirement }}" "pytest-benchmark${{ matrix.pytest-benchmark-requirement }}" matplotlib pandas
            python -m pip install pygal pygaljs
+           
+      - name: Install Qutip
+        run: |
            git clone --branch dev.major https://github.com/qutip/qutip
            cd qutip
            echo "recursive-include qutip *.h" >> MANIFEST.in
            python setup.py install
            cd ..
+
+      - name: delete qutip directory
+        run: |
+           rm -r qutip/
            ls
+
       - name: test qobjevo string
         run: |
           python test.py
