@@ -57,7 +57,7 @@ def time_dep(A, dtype):
         return qt.QobjEvo([A,'cos(t)'])
 
 #Supported dtypes
-dtype = ['function','string']
+dtype = ['function']
 @pytest.fixture(params = dtype)
 def dtype(request): return request.param
 
