@@ -31,9 +31,9 @@ def remove_outliers(df,col,n_std):
     df = df[(df[col] <= mean+(n_std*sd))]
     return df
 def delete_date_duplicates(df):
-    df["date"] = df["time"].dt.date
-    df.drop_duplicates(subset=["date"], keep='last')
-    print(df.date)
+    # df["date"] = df["time"].dt.date
+    # df.drop_duplicates(subset=["date"], keep='last')
+    # print(df.date)
     return df
 
 def json_to_dataframe(filepath):
@@ -86,10 +86,11 @@ def compute_stats(df):
     datadf = pd.DataFrame(data, columns= column_names)
     return datadf
 
-def plot_benchmark_dtype(df):
+def plot_benchmarks(df):
     """Plots results using matplotlib. It iterates params_get_operation and
     params_density and plots time vs N (for NxN matrices)"""
     
+    #plot operations
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
         if size == 128 or size == 512:
@@ -104,27 +105,36 @@ def plot_benchmark_dtype(df):
                 cpus = []
                 for cpu, gra in g.groupby('cpu'):
                     gr = delete_date_duplicates(gra)
-                    if "Platinum" in cpu:
-                        cpus.append(cpu)
-                        if dtype == 'numpy':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
-                        if dtype == 'qutip_dense':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
-                        if dtype == 'qutip_csr':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
-                        if dtype == 'scipy_csr':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[3])
-                        count = count+1                  
+                    cpus.append(cpu)
+                    if dtype == 'numpy' or dtype == 'function':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
+                    if dtype == 'qutip_dense'or dtype == 'array':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
+                    if dtype == 'qutip_csr'or dtype == 'string':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
+                    if dtype == 'scipy_csr':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[3])
+                    count = count+1                  
                 f = lambda m,c: plt.plot([],[],m, color=c)[0]
+            if operation == "evo_matmul":
+                handles = [f("s", colors[i]) for i in range(3)]
+                handles += [f(markers[i], "k") for i in range(3)]
+                labels = ['function','array','string'] + cpus
+                ax.legend(handles, labels) 
+                ax.set_xlabel("date")
+                ax.tick_params(labelrotation=90)
+                ax.set_ylabel("time (s)")
+                ax.set_yscale('log')
+            else:
+                handles = [f("s", colors[i]) for i in range(4)]
+                handles += [f(markers[i], "k") for i in range(3)]
+                labels = ['numpy','qutip_dense','qutip_csr','scipy_csr'] + cpus
+                ax.legend(handles, labels) 
+                ax.set_xlabel("date")
+                ax.tick_params(labelrotation=90)
+                ax.set_ylabel("time (s)")
+                ax.set_yscale('log')
 
-            handles = [f("s", colors[i]) for i in range(4)]
-            handles += [f(markers[i], "k") for i in range(3)]
-            labels = ['numpy','qutip_dense','qutip_csr','scipy_csr'] + cpus
-            ax.legend(handles, labels) 
-            ax.set_xlabel("date")
-            ax.tick_params(labelrotation=90)
-            ax.set_ylabel("time (s)")
-            ax.set_yscale('log')
             fig.tight_layout()
             fig.subplots_adjust(top=0.95)
             
@@ -137,90 +147,51 @@ def plot_benchmark_dtype(df):
             folder.mkdir(parents=True, exist_ok=True)
             plt.savefig(f"./images/plots/{operation}_{density}_{size}.png",bbox_inches='tight')
             plt.close()
+    #plot solvers
+    grouped = df.groupby(['params_get_operation','params_dimension'])
+    for (operation, dimension), group in grouped:
+        if operation == "mesolve" and dimension == 64 or dimension == 256:
 
-def plot_benchmark_cpu_dtype(df):
-    """Plots results using matplotlib. It iterates params_get_operation and
-    params_density and plots time vs N (for NxN matrices)"""
-    folder = Path("images/cpu_dtype_sep")
-    folder.mkdir(parents=True, exist_ok=True)
-    grouped = df.groupby(['params_get_operation','params_density','params_size','cpu'])
-    for (operation, density, size, cpu), group in grouped:
-        if size > 200  and operation == 'matmul':
-            N = len(group.groupby('extra_info_dtype'))
-            fig, ax = plt.subplots(N,1)
-            fig.set_size_inches(15, 6*N)
-            fig.suptitle(f"{operation} {density} {size} {cpu}")
-            n=0
-            for dtype, g in group.groupby('extra_info_dtype'):
-                    x = g.stats_mean.describe(percentiles=[0.05,0.25,0.5,0.75,0.95])
-                    median = [x['50%'] for i in g.stats_median]
-                    medianplus10 = [i*1.1 for i in median]
-                    medianminus10 = [i*0.9 for i in median]
-
-                    
-                    ax[n].errorbar(g.time, g.stats_mean, g.stats_stddev,
-                                    fmt='.-', label=dtype)
-                    
-                    ax[n].plot(g.time,median, label='median')
-                    ax[n].plot(g.time,medianplus10, label='median + 10%')
-                    ax[n].plot(g.time,medianminus10, label='median - 10%')
-                    ax[n].legend()        
-                    ax[n].set_xlabel("date")
-                    ax[n].tick_params(labelrotation=90)
-                    ax[n].set_ylabel("time (s)")
-                    n = n+1
-            plt.gcf().autofmt_xdate()
-            plt.savefig(f"./images/cpu_dtype_sep/{cpu}_{operation}_{density}_{size}.png",bbox_inches='tight')
-            plt.close()
-
-def plot_benchmark_cpu(df):
-    """Plots results using matplotlib. It iterates params_get_operation and
-    params_density and plots time vs N (for NxN matrices)"""
-    folder = Path("images/cpu_sep")
-    folder.mkdir(parents=True, exist_ok=True)
-    grouped = df.groupby(['params_get_operation','params_density','params_size','cpu'])
-    for (operation, density, size, cpu), group in grouped:
-        if size > 200 and operation == 'matmul':
-            d = {}
             fig, ax = plt.subplots(1,1)
-            fig.set_size_inches(15, 15)
-            fig.suptitle(f"{operation} {density} {size} {cpu}")
-            for dtype, g in group.groupby('extra_info_dtype'):
-                ax.errorbar(g.time, g.stats_mean, g.stats_stddev,
-                            fmt='.-', label=dtype)
-                d[dtype]=g.stats_mean
-            ax.legend()        
+            fig.suptitle(f'Solver: {density}  Hilbert Space Dimension: {dimension}', fontsize=20)
+            fig.set_size_inches(9, 9)
+            for model, g in group.groupby('params_model'):
+                colors = ["blue", "orange", "green","red"]
+                markers = ['o--','x-','v:']
+                count = 0
+                cpus = []
+                for cpu, gra in g.groupby('cpu'):
+                    gr = delete_date_duplicates(gra)
+                    cpus.append(cpu)
+                    if model == 'jc':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
+                    if model == "cavity":
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
+                    if model == "qubit":
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
+                    count = count+1                  
+                f = lambda m,c: plt.plot([],[],m, color=c)[0]
+
+            handles = [f("s", colors[i]) for i in range(3)]
+            handles += [f(markers[i], "k") for i in range(3)]
+            labels = ['Jaynes-Cummings','Photon cavity','Qubit spin chain'] + cpus
+            ax.legend(handles, labels)
             ax.set_xlabel("date")
             ax.tick_params(labelrotation=90)
             ax.set_ylabel("time (s)")
             ax.set_yscale('log')
 
-
-            plt.tight_layout()
-            plt.gcf().autofmt_xdate()
-            plt.savefig(f"./images/cpu_sep/{cpu}_{operation}_{density}_{size}.png")
-            plt.close()
-
-def plot_benchmark(df):
-    """Plots results using matplotlib. It iterates params_get_operation and
-    params_density and plots time vs N (for NxN matrices)"""
-    folder = Path("images/no_sep")
-    folder.mkdir(parents=True, exist_ok=True)
-    grouped = df.groupby(['params_get_operation','params_density','params_size'])
-    for (operation, density, size), group in grouped:
-        if size > 200 and operation == 'matmul':
-            for dtype, g in group.groupby('extra_info_dtype'):
-                plt.errorbar(g.time, g.stats_mean, g.stats_stddev,
-                            fmt='.-', label=dtype)
+            fig.tight_layout()
+            fig.subplots_adjust(top=0.95)
             
-            plt.title(f"{operation} {density} {size}")
-            plt.legend()        
-            plt.xlabel("date")
-            plt.xticks(rotation=90)
-            plt.ylabel("time (s)")
-            plt.tight_layout()
+
+
+                
             plt.gcf().autofmt_xdate()
-            plt.savefig(f"./images/no_sep/{operation}_{density}_{size}.png")
+
+            folder = Path("images/plots")
+            folder.mkdir(parents=True, exist_ok=True)
+            plt.savefig(f"./images/plots/{operation}_{dimension}.png",bbox_inches='tight')
             plt.close()
 
 def count_cpu(df):
@@ -256,25 +227,13 @@ def create_dataframe(paths):
     
     return df
 
-
-
 def main(args=[]):
     folder = Path("images")
     paths = get_paths()
     data = create_dataframe(paths)
     folder.mkdir(parents=True, exist_ok=True)
-
-    # plot_benchmark(data)
-    # print('no sep done')
-   # plot_benchmark_dtype(data)
-    plot_benchmark_dtype(data)
+    plot_benchmarks(data)
     print('done')
-    # plot_benchmark_cpu(data)
-    # print('cpu sep done')
-    # plot_benchmark_cpu_dtype(data)
-    # print('dtype cpu sep done')
- 
-
   
 if __name__ == '__main__':
     main()

@@ -6,6 +6,6 @@ def get_mesolve(setup):
     
     def me_solve(rep):
         for i in range(rep):
-            exp_n = mesolve(H, psi0, tspan, c_ops, e_ops).expect[0]
-        return exp_n
+            res = mesolve(H, psi0, tspan, c_ops, e_ops)
+        return res
     return me_solve

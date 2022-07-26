@@ -7,17 +7,17 @@ from . import benchmark_solver
 
 
 
-rep = 1
+rep = 2
 
 solver_ops = [ getattr(benchmark_solver,_) for _ in dir(benchmark_solver) if _[:3]=="get"]
 solver_ids = [ _[4:] for _ in dir(benchmark_solver) if _[:3]=="get"]
 
 
 
-@pytest.fixture(params = np.arange(10,161,10,dtype=int).tolist())
+@pytest.fixture(params = np.logspace(2, 8, 7, base=2, dtype=int).tolist())
 def dimension(request): return request.param
 
-@pytest.fixture(params = ["jc", "cavity"])
+@pytest.fixture(params = ["jc","cavity","qubit"])
 def model(request): return request.param
 
 
@@ -76,9 +76,60 @@ def cavity_setup(dimension):
     psi0 = qt.coherent(dimension, alpha0)
     return (H, psi0, tspan, J, [n])
 
+@pytest.fixture(scope='function')
+def qubit_setup(dimension):
+    N = int(np.log2(dimension))
+   
+    # initial state
+    state_list = [qt.basis(2, 1)] + [qt.basis(2, 0)] * (N - 1)
+    psi0 = qt.tensor(state_list)
+
+
+    # Energy splitting term
+    h = 2 * np.pi * np.ones(N)
+
+    # Interaction coefficients
+    Jx = 0.2 * np.pi * np.ones(N)
+    Jy = 0.2 * np.pi * np.ones(N)
+    Jz = 0.2 * np.pi * np.ones(N)
+
+    # Setup operators for individual qubits
+    sx_list, sy_list, sz_list = [], [], []
+    for i in range(N):
+        op_list = [qt.qeye(2)] * N
+        op_list[i] = qt.sigmax()
+        sx_list.append(qt.tensor(op_list))
+        op_list[i] = qt.sigmay()
+        sy_list.append(qt.tensor(op_list))
+        op_list[i] = qt.sigmaz()
+        sz_list.append(qt.tensor(op_list))
+
+    # Hamiltonian - Energy splitting terms
+    H = 0
+    for i in range(N):
+        H -= 0.5 * h[i] * sz_list[i]
+
+
+    # Interaction terms
+    for n in range(N - 1):
+        H += -0.5 * Jx[n] * sx_list[n] * sx_list[n + 1]
+        H += -0.5 * Jy[n] * sy_list[n] * sy_list[n + 1]
+        H += -0.5 * Jz[n] * sz_list[n] * sz_list[n + 1]
+
+    # dephasing rate
+    gamma = 0.02 * np.ones(N)
+
+    # collapse operators
+    c_ops = [np.sqrt(gamma[i]) * sz_list[i] for i in range(N)]
+
+
+    #times
+    times = np.linspace(0, 100, 200)
+    
+    return (H, psi0, times, c_ops, [])
 
 @pytest.mark.parametrize("get_solver",solver_ops,ids=solver_ids)
-def test_mesolve(benchmark, model, jc_setup,cavity_setup, get_solver, request):
+def test_mesolve(benchmark, model, jc_setup,cavity_setup, qubit_setup, get_solver, request):
     group = request.node.callspec.id
     group = group.split('-')
     benchmark.group = '-'.join(group)
@@ -87,55 +138,13 @@ def test_mesolve(benchmark, model, jc_setup,cavity_setup, get_solver, request):
         setup = cavity_setup
     elif(model == 'jc'):
         setup = jc_setup
-
-    
-    solver = get_solver(setup)
-    result = benchmark(solver,rep)
-    return result
-
-
-@pytest.fixture(params = np.arange(2,11,1,dtype=int).tolist())
-def n_qubits(request): return request.param
-
-@pytest.fixture(params = ["qubit"])
-def q_model(request): return request.param
-
-@pytest.fixture(scope='function')
-def qubit_setup(n_qubits):
-    delta = 2 * np.pi
-    g = 0.25
-   
-    eye = []
-    for i in range(n_qubits-1):
-        eye.append(qt.qeye(2))
-    I = qt.tensor(eye)
-    
-    
-    # hamiltonian
-    H = delta / 2.0 * qt.tensor(I,qt.sigmax())
-
-    # list of collapse operators
-    c_ops = [np.sqrt(g) * qt.tensor(I,qt.sigmaz())]
-
-    # initial state
-    qubits = []
-    for i in range(n_qubits):
-        qubits.append(qt.basis(2,0))
-    psi0 = qt.tensor(qubits)
-
-
-    # times
-    tlist = np.linspace(0, 10, 11)
-    return (H, psi0, tlist, c_ops, [qt.tensor(I,qt.sigmaz())])
-
-@pytest.mark.parametrize("get_solver",solver_ops,ids=solver_ids)
-def test_mesolve_qubit(benchmark,q_model, qubit_setup, get_solver, request):
-    group = request.node.callspec.id
-    group = group.split('-')
-    benchmark.group = '-'.join(group)
-    
-    if(q_model == 'qubit'):
+    elif(model == 'qubit'):
         setup = qubit_setup
+
     solver = get_solver(setup)
     result = benchmark(solver,rep)
     return result
+
+
+
+
