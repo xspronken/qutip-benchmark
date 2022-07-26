@@ -94,6 +94,7 @@ jobs:
         run: |
           git clone --depth 1 -b gh-pages https://github.com/qutip/qutip-benchmark
           rm -rf qutip-benchmark/.git
+          rm -rf qutip-benchmark/images/plots
           cp -rf images qutip-benchmark/
 
           

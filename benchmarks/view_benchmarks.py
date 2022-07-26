@@ -94,7 +94,7 @@ def plot_benchmarks(df):
     grouped = df.groupby(['params_get_operation','params_density','params_size'])
     for (operation, density, size), group in grouped:
         if size == 128 or size == 512:
-
+            size = int(size)
             fig, ax = plt.subplots(1,1)
             fig.suptitle(f'Matrix density: {density}         Matrix Size: {size}x{size}', fontsize=20)
             fig.set_size_inches(9, 9)
@@ -150,7 +150,7 @@ def plot_benchmarks(df):
     grouped = df.groupby(['params_get_operation','params_dimension'])
     for (operation, dimension), group in grouped:
         if operation == "mesolve" and dimension == 64 or dimension == 256:
-
+            dimension = int(dimension)
             fig, ax = plt.subplots(1,1)
             fig.suptitle(f'Solver: {operation}  Hilbert Space Dimension: {dimension}', fontsize=20)
             fig.set_size_inches(9, 9)
