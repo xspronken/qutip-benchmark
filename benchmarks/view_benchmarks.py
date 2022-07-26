@@ -104,35 +104,30 @@ def plot_benchmarks(df):
                 count = 0
                 cpus = []
                 for cpu, gr in g.groupby('cpu'):
-                    if 'Platinum' in cpu:
-                        cpus.append(cpu)
-                        if dtype == 'numpy' or dtype == 'function':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
-                        if dtype == 'qutip_dense'or dtype == 'array':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
-                        if dtype == 'qutip_csr'or dtype == 'string':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
-                        if dtype == 'scipy_csr':
-                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[3])
-                        count = count+1                  
-                f = lambda m,c: plt.plot([],[],m, color=c)[0]
+                    cpus.append(cpu)
+                    if dtype == 'numpy' or dtype == 'function':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
+                    if dtype == 'qutip_dense'or dtype == 'array':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
+                    if dtype == 'qutip_csr'or dtype == 'string':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
+                    if dtype == 'scipy_csr':
+                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[3])
+                    count = count+1                  
+            f = lambda m,c: plt.plot([],[],m, color=c)[0]
             if operation == "evo_matmul":
                 handles = [f("s", colors[i]) for i in range(3)]
                 handles += [f(markers[i], "k") for i in range(3)]
                 labels = ['function','array','string'] + cpus
-                ax.legend(handles, labels) 
-                ax.set_xlabel("date")
-                ax.tick_params(labelrotation=90)
-                ax.set_ylabel("time (s)")
-                ax.set_yscale('log')
-            else:
+
+            elif operation == 'matmul' or operation == "add":
                 handles = [f("s", colors[i]) for i in range(4)]
                 handles += [f(markers[i], "k") for i in range(3)]
                 labels = ['numpy','qutip_dense','qutip_csr','scipy_csr'] + cpus
-                ax.legend(handles, labels) 
-                ax.set_xlabel("date")
-                ax.set_ylabel("time (s)")
-                ax.set_yscale('log')
+            ax.legend(handles, labels)
+            ax.set_xlabel("date")
+            ax.set_ylabel("time (s)")
+            ax.set_yscale('log')
 
             fig.tight_layout()
             fig.subplots_adjust(top=0.95)
