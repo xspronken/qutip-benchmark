@@ -42,7 +42,7 @@ def json_to_dataframe(filepath):
     with open(filepath) as f:
         data = json.load(f)
         cpu = data['machine_info']["cpu"]["brand_raw"]
-        time = data['commit_info']["time"]
+        time = data['datetime']
         
         data = data['benchmarks']
         data = unravel(data, 'options')
@@ -103,8 +103,7 @@ def plot_benchmarks(df):
                 markers = ['o--','x-','v:']
                 count = 0
                 cpus = []
-                for cpu, gra in g.groupby('cpu'):
-                    gr = delete_date_duplicates(gra)
+                for cpu, gr in g.groupby('cpu'):
                     cpus.append(cpu)
                     if dtype == 'numpy' or dtype == 'function':
                         ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
@@ -131,7 +130,6 @@ def plot_benchmarks(df):
                 labels = ['numpy','qutip_dense','qutip_csr','scipy_csr'] + cpus
                 ax.legend(handles, labels) 
                 ax.set_xlabel("date")
-                ax.tick_params(labelrotation=90)
                 ax.set_ylabel("time (s)")
                 ax.set_yscale('log')
 
@@ -160,8 +158,7 @@ def plot_benchmarks(df):
                 markers = ['o--','x-','v:']
                 count = 0
                 cpus = []
-                for cpu, gra in g.groupby('cpu'):
-                    gr = delete_date_duplicates(gra)
+                for cpu, gr in g.groupby('cpu'):
                     cpus.append(cpu)
                     if model == 'jc':
                         ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
@@ -177,7 +174,6 @@ def plot_benchmarks(df):
             labels = ['Jaynes-Cummings','Photon cavity','Qubit spin chain'] + cpus
             ax.legend(handles, labels)
             ax.set_xlabel("date")
-            ax.tick_params(labelrotation=90)
             ax.set_ylabel("time (s)")
             ax.set_yscale('log')
 

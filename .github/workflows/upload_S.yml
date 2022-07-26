@@ -62,10 +62,7 @@ jobs:
         run: |
            rm -r qutip/
            ls
-
-      - name: test qobjevo string
-        run: |
-          python test.py
+           
       - name: download from s3
         run: |
           aws s3 cp s3://qutip-benchmark-data ./.benchmarks --recursive
