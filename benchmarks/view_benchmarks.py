@@ -104,16 +104,17 @@ def plot_benchmarks(df):
                 count = 0
                 cpus = []
                 for cpu, gr in g.groupby('cpu'):
-                    cpus.append(cpu)
-                    if dtype == 'numpy' or dtype == 'function':
-                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
-                    if dtype == 'qutip_dense'or dtype == 'array':
-                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
-                    if dtype == 'qutip_csr'or dtype == 'string':
-                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
-                    if dtype == 'scipy_csr':
-                        ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[3])
-                    count = count+1                  
+                    if 'Platinum' in cpu:
+                        cpus.append(cpu)
+                        if dtype == 'numpy' or dtype == 'function':
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[0])
+                        if dtype == 'qutip_dense'or dtype == 'array':
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[1])
+                        if dtype == 'qutip_csr'or dtype == 'string':
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[2])
+                        if dtype == 'scipy_csr':
+                            ax.plot(gr.time, gr.stats_mean, markers[count], color=colors[3])
+                        count = count+1                  
             f = lambda m,c: plt.plot([],[],m, color=c)[0]
             if operation == "evo_matmul":
                 handles = [f("s", colors[i]) for i in range(3)]
