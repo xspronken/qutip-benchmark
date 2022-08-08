@@ -30,16 +30,10 @@ def matrix(size, density):
 
 
     if density == "sparse":
-        ofdiag = np.random.rand(size-1) + 1j*np.random.rand(size-1)
-        diag = np.random.rand(size) + 1j*np.random.rand(size)
-
-        return qt.Qobj(np.diag(ofdiag, k=-1)
-                + np.diag(diag, k=0)
-                + np.diag(ofdiag.conj(), k=1))
+        return qt.rand_herm(size,density=0)
 
     elif density == "dense":
-        H = np.random.random((size, size)) + 1j*np.random.random((size, size))
-        return qt.Qobj(H + H.T.conj())
+        return qt.rand_herm(size,density=1)
 
 @pytest.fixture(scope='function')
 def vector(size):
