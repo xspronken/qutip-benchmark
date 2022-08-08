@@ -52,7 +52,7 @@ jobs:
            
       - name: Install Qutip andd test qobjevo
         run: |
-           python -m pip install https://github.com/qutip/qutip@dev.major
+           python -m pip install git+https://github.com/qutip/qutip@dev.major
            python test.py
            
       - name: download from s3
